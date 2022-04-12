@@ -1,0 +1,3 @@
+asm=mcpp->cocas->cocol
+obj=cocol
+img=

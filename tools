@@ -1,0 +1,4 @@
+cocas=python cocas\cocas.py->obj
+cocol=python cocol\cocol.py->img
+mcpp=mcpp\mcpp.bat->asm->_p
+debug=python cocoide\cocoideV1.91.pyw
