@@ -1,2 +1,4 @@
-test.img
-0:block_video_test.asm
+button_test.img
+0:bootloader.asm
+1:imitation_of_working_proccess.asm
+5:isr.asm

@@ -1,0 +1,3 @@
+firmware.img
+0:bootloader.asm
+5:battleship_main.asm

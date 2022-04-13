@@ -1,6 +1,6 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#define STACK_OFFSET    0x81    // Stack offset
+#define STACK_OFFSET    -128    // Stack offset
 
 #endif
