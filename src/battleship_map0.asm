@@ -3,8 +3,7 @@
 asect 0
 main:
     ldi r2, RAM_CONTROLLER_ADDR  //
-    ldi r3, 0                    // set page 0 in RAM
-    st r2, r3                    //
+    st r2, r0                    // map number in r0
     ldi r0, 10     // counter
     ldi r2, 0x80   // address of 1st cell
     loop:
