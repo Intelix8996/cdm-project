@@ -50,6 +50,7 @@ main:
         dec r0
         bnz loop
     ldi r2, ROM_CONTROLLER_ADDR
+    ldi r3, 0
     st r2, r3
     rts
 

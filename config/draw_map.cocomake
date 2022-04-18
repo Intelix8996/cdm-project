@@ -1,4 +1,4 @@
-copy_map.img
+draw_map.img
 0:bootloader_copy_map_to_RAM.asm
 1:battleship_draw_map.asm
 10:battleship_map0.asm
