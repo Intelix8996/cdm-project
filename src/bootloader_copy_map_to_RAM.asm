@@ -17,16 +17,21 @@ main:
     st r0, r1
     
     ldi r0, 0
-    ldi r2, ROM_CONTROLLER_ADDR  //
-    ldi r3, 10                   //
+    ldi r2, ROM_CONTROLLER_ADDR    //
+    ldi r3, 10                    //
     st r2, r3                    // jump to 10st ROM bank (map0)
-    jsr 0                        //
+    jsr 0                       //
 
     ldi r0, 0
-    ldi r2, ROM_CONTROLLER_ADDR //
-    ldi r3, 1                   //  
+    ldi r2, ROM_CONTROLLER_ADDR   //
+    ldi r3, 1                    //  
     st r2, r3                   // jump to Draw_map module
-    jsr 0                       //
+    jsr 0                      //
+
+    ldi r2, ROM_CONTROLLER_ADDR
+    ldi r3, 2
+    st r2, r3
+    jsr 0
     halt                       
 
 end.

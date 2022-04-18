@@ -5,7 +5,7 @@
 asect 0
 main:
     ldi r2, RAM_CONTROLLER_ADDR  //
-    st r2, r0                    // map number in r0
+    st r2, r0                   // map number in r0
 
     ldi r2, M_CELL
     ldi r0, 27  // X - coordinate
@@ -57,15 +57,15 @@ jump1:
     is pl
         br loop
     fi
-
-    
-
-
-halt
+ldi r2, ROM_CONTROLLER_ADDR
+ldi r3, 0x80
+st r2, r3
+rts
 
 drawShip:
+
     ldi r2, DISP_A_ADDR
-    ldi r3, 0b00000010
+    ldi r3, 0b00000111
     st r2, r3
     st r2, r0
     st r2, r1
@@ -81,7 +81,7 @@ drawShip:
     st r2, r3
 
     inc r0
-    ldi r3, 0b00000010
+    ldi r3, 0b00000111
     st r2, r3
     st r2, r0
     st r2, r1
@@ -92,6 +92,31 @@ drawShip:
     rts
 
 drawDeadShip:
+    ldi r2, DISP_A_ADDR
+    ldi r3, 0b00000111
+    st r2, r3
+    st r2, r0
+    st r2, r1
+    ldi r3, 0b11100001
+    st r2, r3
+   
+    inc r0
+    ldi r3, 0b00000101
+    st r2, r3
+    st r2, r0
+    st r2, r1
+    ldi r3, 0b11100001
+    st r2, r3
+
+    inc r0
+    ldi r3, 0b00000111
+    st r2, r3
+    st r2, r0
+    st r2, r1
+    ldi r3, 0b11100001
+    st r2, r3
+    dec r0
+    dec r0
     rts
 
 drawDeadShipArea:

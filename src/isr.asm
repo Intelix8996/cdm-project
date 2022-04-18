@@ -49,16 +49,16 @@ main:
         inc r1
     fi
 
-    st r3, r1           //
-    st r3, r2           // printing new cursor position
-    ldi r0, 0b10100111  //
+    st r3, r1              //
+    st r3, r2             // printing new cursor position
+    ldi r0, 0b10100111   //
     st r3, r0           //
-    ldi r3, 0               //
-    st r3, r1               //
+    ldi r3, 0                 //
+    st r3, r1                //
     inc r3                  // storing new cursor coordinates at 0 and 1 data cells
-    st r3, r2               //
-    ldi r3, 0xf8       //
-    ldi r2, 0x80       // return from interrupt
-    st r3, r2          //
-    rti                //
+    st r3, r2              //
+    ldi r3, ROM_CONTROLLER_ADDR       //
+    ldi r2, 0x80                     // return from interrupt
+    st r3, r2                       //
+    rti                            //
 end.

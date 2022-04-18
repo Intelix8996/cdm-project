@@ -1,4 +1,6 @@
 draw_map.img
 0:bootloader_copy_map_to_RAM.asm
 1:battleship_draw_map.asm
+2:imitation_of_working_proccess.asm
+5:isr.asm
 10:battleship_map0.asm
