@@ -49,7 +49,9 @@ main:
 
         dec r0
         bnz loop
-    halt
+    ldi r2, ROM_CONTROLLER_ADDR
+    st r2, r3
+    rts
 
 asect 0x80
 dc E_CELL, E_CELL, N_CELL, N_CELL, N_CELL, N_CELL, N_CELL, N_CELL, N_CELL, N_CELL // https://ibb.co/TPtKbZJ
