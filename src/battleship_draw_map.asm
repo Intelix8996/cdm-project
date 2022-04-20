@@ -1,6 +1,6 @@
 #include <devices.h>
-#include <battleship/map_constants.h>
-#include <battleship/global_vars.h>
+#include "battleship/map_constants.h"
+#include "battleship/global_vars.h"
 
 asect 0
 main:

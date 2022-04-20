@@ -1,9 +1,14 @@
 #include <devices.h>
-#include "util.h"
+
+#define STACK_OFFSET    -128    // Stack offset
+
 asect 0
+
 main:
-    addsp STACK_OFFSET
-    ei                       // Enable interrupts
+    addsp STACK_OFFSET      // Move SP
+
+    ei                      // Enable interrupts
+
     ldi r0, IR_BUFFER_ADDR  // Init IR buffer
     ldi r1, 0xff
     st r0, r1
@@ -24,7 +29,6 @@ main:
     ldi r0, 0b10100111     //
     st r3, r0              //
 
-    
     ldi r2, ROM_CONTROLLER_ADDR  //
     ldi r3, 1                    //
     st r2, r3                    // jump to 1st ROM bank 

@@ -1,14 +1,17 @@
 #include <devices.h>
-#include <battleship/global_vars.h>
-#include "util.h"
+#include "battleship/global_vars.h"
+
+#define STACK_OFFSET    -128    // Stack offset
 
 asect LEN_GLOB
-ldi r0, 0
-ldi r1, X_CURSOR
-st r0, r1
-inc r0
-ldi r1, Y_CURSOR
-st r0, r1
+
+    ldi r0, 0
+    ldi r1, X_CURSOR
+    st r0, r1
+    inc r0
+    ldi r1, Y_CURSOR
+    st r0, r1
+
 main:
     addsp STACK_OFFSET
     ei                       // Enable interrupts

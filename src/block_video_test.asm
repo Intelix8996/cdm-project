@@ -1,5 +1,6 @@
 #include "call.h"
-#include "util.h"
+
+#define STACK_OFFSET    -128    // Stack offset
 
 asect 0
 

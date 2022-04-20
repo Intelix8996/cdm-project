@@ -1,12 +1,15 @@
 #include <devices.h>
-#include <battleship/map_constants.h>
+#include "battleship/map_constants.h"
+
 asect 0
+
 main:
     ldi r2, RAM_CONTROLLER_ADDR  //
     st r2, r0                    // map number in r0
     ldi r0, 10     // counter
     ldi r2, 0x80   // address of 1st cell
-    loop:
+
+loop:
         ldc r2, r1
         st r2, r1
         inc r2
@@ -49,6 +52,7 @@ main:
 
         dec r0
         bnz loop
+        
     ldi r2, ROM_CONTROLLER_ADDR
     ldi r3, 0
     st r2, r3
