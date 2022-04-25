@@ -44,7 +44,7 @@ main:
     st r2, r3                   //
     jsr 0                      //
 
-
+    halt
 
     
 
