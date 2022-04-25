@@ -8,7 +8,7 @@
 
 Call a module by number
 
-call {module} {entry}
+call {module}, {entry}
 
 */
 macro call/2
@@ -22,10 +22,10 @@ mend
 
 Call a module by offstet
 
-call {offset} {entry}
+call {offset}, {entry}
 
 */
-macro
+
 macro rcall/2
     ldi r2, ROM_CONTROLLER_ADDR
     ld r2, r3

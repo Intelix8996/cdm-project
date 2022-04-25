@@ -5,7 +5,7 @@ asect 0
 
 main:
     ldi r2, RAM_CONTROLLER_ADDR  //
-    st r2, r0                    // map number in r0
+    st r2, r1                    // page number in r1
     ldi r0, 10     // counter
     ldi r2, 0x80   // address of 1st cell
 

@@ -1,6 +1,7 @@
 # Temporary files
 temp/
 timestamps
+plan.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
