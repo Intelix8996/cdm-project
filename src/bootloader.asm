@@ -11,6 +11,6 @@ main:
     ldi r1, 0x00
     st r0, r1
 
-    call 2, 0
+    call 2, APP_ENTRY
     halt
 end.
