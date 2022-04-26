@@ -12,5 +12,6 @@ main:
     st r0, r1
 
     call 2, APP_ENTRY
+
     halt
 end.
