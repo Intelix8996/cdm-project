@@ -46,9 +46,10 @@ main:
     jsr 0                      //
 
 
-    ldi r0, P_PLAYER_MAP
-    rcall 1, 0
+    ldi r0, P_PLAYER_MAP     //
+    rcall 1, 0              // Drawing a Player's map
 
+    rcall 2, 0          // Calling the Arbiter module
 
     halt
 

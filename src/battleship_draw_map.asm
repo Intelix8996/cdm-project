@@ -63,10 +63,7 @@ jump1:
         br loop
     fi
 
-ldi r2, ROM_CONTROLLER_ADDR
-ldi r3, 0x80
-st r2, r3
-rts
+mret
 
 drawShip:
 
