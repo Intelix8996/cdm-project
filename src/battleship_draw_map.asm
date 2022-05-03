@@ -11,6 +11,7 @@ main:
     ldi r2, 0x8a
     ldi r0, 30  // X - coordinate
     ldi r1, 27 //  Y - coordinate
+    
 loop:
     ld r2, r3 // address of cell in r2, type of cell in r1
     if

@@ -20,6 +20,9 @@ main:
     inc r1             //
     st r1, r3         //   
 
+    ldi r2, NUM_CELL  //
+    ldi r3, 0xda     // number of cell on which cursor is pointing to is 0xda
+    st r2, r3       //
 
 
     ldi r2, RANDOM_GEN_ADDR          //

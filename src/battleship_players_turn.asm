@@ -5,5 +5,6 @@
 
 asect 0
 main:
+    br main
 
 end.

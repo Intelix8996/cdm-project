@@ -15,7 +15,8 @@ main:
     ld r2, r3                    // First player in r3
     ldi r0, 0b00000001          // 0 - Computer, 1 - Player
     and r0, r3                 //  
-
+    ldi r3, 1 //del
+// start of loop //    
 loop:
     if
         tst r3                 //
@@ -40,7 +41,8 @@ loop:
     then               //
         br loop       //
     fi               
-main_continues:
+// end of loop //
+
     if
         tst r0
     is z
