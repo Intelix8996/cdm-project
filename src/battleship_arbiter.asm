@@ -16,7 +16,38 @@ main:
     ldi r0, 0b00000001          // 0 - Computer, 1 - Player
     and r0, r3                 //  
 
+loop:
+    if
+        tst r3                 //
+    is z                      // 
+        rcall 1, 0           //
+        ldi r3, 1           // if (r3==0) then (call Computer's turn module) else (call Players's turn module)
+    else                   //
+        rcall 2, 0        //
+        ldi r3, 0        //
+    fi
 
+    ldi r2, COMP_SHIPS     //
+    ld r2, r0             // Number of Computer's ships in r0
+    inc r2               // Number of Player's ships in r1
+    ld r2, r1           // 
 
-
+    if
+        tst r1             //
+    is nz, and            //
+        tst r0           // if (Player's ships!=0)&&(Computer's ships!=0) then (br loop)
+    is nz               //
+    then               //
+        br loop       //
+    fi               
+main_continues:
+    if
+        tst r0
+    is z
+        //print("WIN")
+    else
+        //print("LOSE")
+    fi
+    mret
+    
 end. 
