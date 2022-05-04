@@ -4,8 +4,10 @@
 #include <devices.h>
 #include <devices/rom_controller.h>
 
-#define APP_ENTRY 0 // Default entry point for application
-//default_entry
+#define APP_ENTRY       0 // Default entry point for application
+#define GENERIC_ENTRY   0 // Default entry point for module
+#define DEFAULT_ENTRY   0 // Default entry point for module
+
 /*
 
 Call a module by number
