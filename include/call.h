@@ -5,7 +5,7 @@
 #include <devices/rom_controller.h>
 
 #define APP_ENTRY 0 // Default entry point for application
-
+//default_entry
 /*
 
 Call a module by number
@@ -71,7 +71,7 @@ mend
 
 Return from interrupt and restore registers
 
-iret
+iretp
 
 */
 macro iretp/0

@@ -1,6 +1,11 @@
 battleship.img
 0:bootloader.asm
+1:battleship_isr.asm
 2:battleship_main.asm
+3:battleship_draw_map.asm
+4:battleship_arbiter.asm
+5:battleship_computers_turn.asm
+6:battleship_players_turn.asm
 100:battleship_map0.asm
 101:battleship_map0.asm
 102:battleship_map0.asm
