@@ -22,11 +22,11 @@ main:
 
 loop:
     ld r2, r3               // read char from keyboard
-    st r2, r3               // loopback to terminal
 
     if
         tst r3              // if read a proper char
     is pl
+        st r2, r3           // loopback to terminal
         if
             cmp r1, r3      // if char == return
         is eq
@@ -35,11 +35,13 @@ loop:
             ldi r3, "0"     // convert ascii code
             sub r0, r3      // to number
 
+            pushall         // save registers
+
             ldi r0, ROM_CONTROLLER_ADDR //
             st r0, r3                   // call module with number
             jsr APP_ENTRY               // in r3
 
-            ldi r2, TERMINAL_ADDR       // restore r2
+            popall                      // restore registers
         else
             ldi r0, 0x00                // else save
             st r0, r3                   // char to 0x00

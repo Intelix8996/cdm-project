@@ -1,13 +1,22 @@
 #include <call.h>
 #include <devices.h>
 
+#include <devices/terminal.h>
+
 asect 0
 
 main:
-    ldi r2, TERMINAL_ADDR
-    ldi r3, "s"
-    st r2, r3
+    printchar_t "s"
+    printchar_t 0x0a
+    
+    printconststring_t str, 18
 
-    mret     
+    printconststring_t str, 5
+
+    mret    
+
+asect 0x50
+str:
+    dc "func_printstring_t" 
 
 end.
