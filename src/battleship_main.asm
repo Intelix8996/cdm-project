@@ -57,7 +57,7 @@ main:
 
     rcall 2, 0          // Calling the Arbiter module
 
-    halt
+    mret
 
     
 
