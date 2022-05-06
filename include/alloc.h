@@ -1,3 +1,14 @@
+/*
+
+Some tools to work with memory
+
+Symbols:
+    alloc
+    free
+    init_heap
+
+*/
+
 #ifndef ALLOC_H
 #define ALLOC_H
 

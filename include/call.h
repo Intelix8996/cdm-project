@@ -1,3 +1,16 @@
+/*
+
+Macros for calling modules
+
+Symbols:
+    call
+    rcall
+    mret
+    iret
+    iretp
+
+*/
+
 #ifndef CALL_H
 #define CALL_H
 

@@ -1,3 +1,9 @@
+/*
+
+ASCII symbols for 7-segment display
+
+*/
+
 #ifndef ASCII_7SEG
 #define ASCII_7SEG
     

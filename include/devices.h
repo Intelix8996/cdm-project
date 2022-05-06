@@ -1,3 +1,9 @@
+/*
+
+Define addresses of all devices
+
+*/
+
 #ifndef DEVICES_H
 #define DEVICES_H
 

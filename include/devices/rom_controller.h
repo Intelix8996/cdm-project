@@ -1,3 +1,9 @@
+/*
+
+Defines ROM controller commands
+
+*/
+
 #ifndef ROM_CONTROLLER_H
 #define ROM_CONTROLLER_H
 

@@ -6,12 +6,14 @@
 asect 0
 
 main:
-    printchar_t "s"
-    printchar_t 0x0a
+    printc_t "s"
+    printc_t 0x0a
     
-    printconststring_t str, 18
+    lcprints_t str, 18
 
-    printconststring_t str, 5
+    lcprints_t str, 5
+
+    printc_t TERM_CLEAR
 
     mret    
 
