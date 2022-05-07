@@ -5,6 +5,13 @@
 
 asect 0
 main:
-    br main
+    ldi r2, PLAYERS_TURN
+    ld r2, r3
+    if
+        tst r3             // r3 contains information about Player's turn
+    is z
+        br main
+    fi
+
 
 end.

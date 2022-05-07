@@ -112,6 +112,15 @@ right:
     
     br exit
 
+hit:
+    pushall
+    ldi r2, PLAYERS_TURN
+    ldi r3, NUM_CELL
+    ld r3, r3
+    st r2, r3
+
+    br exit
+    
 exit:
     iretp
 
@@ -128,6 +137,6 @@ clear_cursor:
     rts                                 //
 
 asect 0xf0
-dc up, 0, down, 0, left, 0, right, 0
+dc up, 0, down, 0, left, 0, right, 0, hit
 
 end.

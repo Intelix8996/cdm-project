@@ -36,7 +36,7 @@ loop:
     if
         tst r1             //
     is nz, and            //
-        tst r0           // if (Player's ships!=0)&&(Computer's ships!=0) then (br loop)
+        tst r0           // if (Player's ships!=0) && (Computer's ships!=0) then (br loop)
     is nz               //
     then               //
         br loop       //
