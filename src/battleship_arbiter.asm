@@ -25,7 +25,8 @@ loop:
         ldi r3, 1           // if (r3==0) then (call Computer's turn module) else (call Players's turn module)
     else                   //
         rcall 2, 0        //
-        ldi r3, 0        //
+        //ldi r3, 0
+        ldi r3, 1        //
     fi
 
     ldi r2, COMP_SHIPS     //
