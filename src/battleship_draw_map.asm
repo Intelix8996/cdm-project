@@ -15,32 +15,13 @@ main:
 loop:
     ld r2, r3 // address of cell in r2, type of cell in r1
     if
-        dec r3
-    is z
+        tst r3
+    is nz
         push r2
         jsr drawShip
         pop r2
-        br jump1
     fi
 
-    if
-        dec r3
-    is z
-        push r2
-        jsr drawDeadShip
-        pop r2
-        br jump1
-    fi
-
-    if
-        dec r3
-    is z
-        push r2
-        jsr drawDeadShipArea
-        pop r2
-    fi
-
-jump1:
     dec r2
 
     if
@@ -93,37 +74,6 @@ drawShip:
     st r2, r3
     dec r0
     dec r0
-    rts
-
-drawDeadShip:
-    ldi r2, DISP_A_ADDR
-    ldi r3, 0b00000111
-    st r2, r3
-    st r2, r0
-    st r2, r1
-    ldi r3, 0b11100001
-    st r2, r3
-   
-    inc r0
-    ldi r3, 0b00000101
-    st r2, r3
-    st r2, r0
-    st r2, r1
-    ldi r3, 0b11100001
-    st r2, r3
-
-    inc r0
-    ldi r3, 0b00000111
-    st r2, r3
-    st r2, r0
-    st r2, r1
-    ldi r3, 0b11100001
-    st r2, r3
-    dec r0
-    dec r0
-    rts
-
-drawDeadShipArea:
     rts
 
 end

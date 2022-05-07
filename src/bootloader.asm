@@ -14,8 +14,8 @@ main:
     ldi r1, 0x00            // Init IR buffer
     st r0, r1               //
 
-    //call 2, APP_ENTRY
-    //halt
+    call 2, APP_ENTRY
+    halt
 
     ldi r1, 0x0a            // return ascii code
     ldi r2, TERMINAL_ADDR
