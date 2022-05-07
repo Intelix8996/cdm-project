@@ -89,7 +89,7 @@ Most of devices connect to IO bus and therefore have similar block and signals t
 
 ![General bus singals](img/general_signals.PNG)
 
-+ `Device data bus` - pins that connect to data bus. 
++ `Device data bus` - pins that connect to data bus. Signals `Write` and `Read` are also generated here. They show whether we writing to this device or reading from it.
 
 ![Device data bus](img/device_databus.PNG)
 
@@ -98,22 +98,50 @@ Typically, devices have general singals on their's north side and data bus pins 
 ![Connecting device to IO bus](img/device_connection.PNG)
 
 ### ROM Controller
+
 ### RAM Controller
+
 ### Interrupt Arbiter
+
 ### Interrupt Enable Buffer
+
 ### Address Decoder
+
 ### Dynamic Interrupt Controller
+
 ### IO Register
+
 ### IO Hex Display Controller
+
 ### IO Seven Segment Display Controller
+
 ### IO Hardware Stack
+
 ### IO Random Number Generator
+
 ### Display Controller
+
 ### Joystick Controller
+
+This controller drives 4-bit joystick.
+
+![Joystick controller connection](img/joystick_connect.PNG)
+
+Additional pins:
+
++ X,Y (west) - pins to X and Y outputs of joystick
+
+![Joystick controller internals](img/joystick_internals.PNG)
+
+It just connects 4-bit X and Y pins to data bus.
+
+When reading from it you get actual position of joystick.
 
 ### Keypad Controller
 
 This controller can drive up to 8 buttons. It can be used in polling mode or through interrupts.
+
+![Keypad controller connection](img/keypad_connect.PNG)
 
 Additional pins:
 
@@ -122,9 +150,29 @@ Additional pins:
 
 ![Keypad controller](img/keypad_controller.PNG)
 
-It has 8 D-triggers. 
+It has 8 D-triggers each connected to a bit in a data bus. Buttons asynchronously set corresponding triggers. Triggers are reset on falling edge of `Read` signal (which is `rd/wr' AND Select`).
+
+So, when reading from it, processor gets a byte that contains information about buttons that were pressed in the past (If some bit is 1, then corresponding button was pressed). After reading, all triggers are reset.
+
+Moreover, if all triggers were zero and some button is pressed then a pulse occurs at IRQ output triggering interrupt.
 
 ### Terminal Controller
+
+This controller is used to drive terminal and keyboard.
+
+![Terminal Controller Connnection](img/terminal_connection.PNG)
+
+Additional pins:
+
++ Terminal/Keyboard pins (south) - pins that connect to terminal and keyboard
+
+![Terminal Controller](img/terminal_internals.PNG)
+
+This controller basically just connects tarminal and keyboard to bus in a way that when writing, 7 bits of data (as ASCII symbol) goes to the terminal and `last bit of data AND Write` forms `Terminal Clear` signal. That means that we can write a character to terminal as well as clear it by sending `0x80`.
+
+When reading keyboard buffer connects to 7 bits of data bus and `Keybaord Available` goes to the last bit of data bus. That helps to read out a whole buffer. Just read from this device while data is not equal to `0x80`.
+
+This device supports interrupts. If keybaord buffer was empty and then there was some input, a pulse occurs on IRQ.
 
 # Software
 
