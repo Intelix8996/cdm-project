@@ -6,12 +6,12 @@
 asect 0
 
 main:
-    printc_t "s"
-    printc_t TERM_LF
+    printc "s"
+    printc TERM_LF
 
-    cprints_t str
+    cprints str
 
-    printc_t TERM_RETURN
+    printc TERM_RETURN
 
     mret    
 

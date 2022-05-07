@@ -1,11 +1,11 @@
 /*
 Summary:
 
-    printc_t
-    prints_t
-    lprints_t
-    cprints_t
-    lcprints_t
+    printc
+    prints
+    lprints
+    cprints
+    lcprints
 
 */
 
@@ -23,55 +23,55 @@ Summary:
 //
 
 // print char to terminal
-macro printc_t/1
+macro printc/1
     ldi r2, TERMINAL_ADDR
     ldi r3, $1
     st r2, r3
 mend
 
-// macro for func_prints_t
-// prints_t addr, len
-macro prints_t/1
+// macro for func_prints
+// prints addr, len
+macro prints/1
 
-func_prints_t: ext
+func_prints: ext
 
     ldi r0, $1
-    jsr func_prints_t
+    jsr func_prints
 
 mend
 
-// macro for func_cprints_t
-// cprints_t addr, len
-macro cprints_t/1
+// macro for func_cprints
+// cprints addr, len
+macro cprints/1
 
-func_cprints_t: ext
+func_cprints: ext
 
     ldi r0, $1
-    jsr func_cprints_t
+    jsr func_cprints
 
 mend
 
-// macro for func_lcprints_t
-// lcprints_t addr, len
-macro lcprints_t/2
+// macro for func_lcprints
+// lcprints addr, len
+macro lcprints/2
 
-func_lcprints_t: ext
+func_lcprints: ext
 
     ldi r0, $1
     ldi r1, $2
-    jsr func_lcprints_t
+    jsr func_lcprints
 
 mend
 
-// macro for func_lprints_t
-// prints_t addr, len
-macro lprints_t/2
+// macro for func_lprints
+// prints addr, len
+macro lprints/2
 
-func_lprints_t: ext
+func_lprints: ext
 
     ldi r0, $1
     ldi r1, $2
-    jsr func_lprints_t
+    jsr func_lprints
 
 mend
 
@@ -82,9 +82,9 @@ mend
 // print null-terminated string from rom
 // at given addres to terminal
 // r0 - address
-rsect func_cprints_t
+rsect func_cprints
 
-func_cprints_t>
+func_cprints>
     ldi r2, TERMINAL_ADDR
 
 loop:
@@ -99,9 +99,9 @@ loop:
 // print null-terminated string from ram
 // at given addres to terminal
 // r0 - address
-rsect func_prints_t
+rsect func_prints
 
-func_prints_t>
+func_prints>
     ldi r2, TERMINAL_ADDR
 
 loop:
@@ -117,9 +117,9 @@ loop:
 // at given addres to terminal
 // r0 - address
 // r1 - length
-rsect func_lcprints_t
+rsect func_lcprints
 
-func_lcprints_t>
+func_lcprints>
     ldi r2, TERMINAL_ADDR
 
     while
@@ -137,9 +137,9 @@ func_lcprints_t>
 // at given addres to terminal
 // r0 - address
 // r1 - length
-rsect func_lprints_t
+rsect func_lprints
 
-func_lprints_t>
+func_lprints>
     ldi r2, TERMINAL_ADDR
 
     while
