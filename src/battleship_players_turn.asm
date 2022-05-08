@@ -41,20 +41,61 @@ check:
     fi
 
 hit_proccessing:
-    ldi r1, LAST_HIT
+    pushall 
+    ldi r3, 0b11100001 
+    jsr print_square
+    popall
+
+    ldi r1, NUM_OF_HITS
     ld r1, r1
     if
         tst r1
     is z
-        ldi r2, HIT_CELL1
-        st r1, r2           // save addr of HIT_CELL1 in LAST_HIT
-        st r2, r3          // save selected cell in HIT_CELL1
-        shra r0
-        shra r0
-        shra r0
-        shra r0
-        ldi r2, SIZE_OF_SHIP
-        st r2, r0
+        ldi r1, PREVIOUS_HIT      //
+        ldi r2, PREVIOUS_HIT     // global vars initialisation
+        st r1, r2               //
+
+        shra r0                        //
+        shra r0                       //
+        shra r0                      // save a size of attacked ship in SIZE_OF_SHIP
+        shra r0                     //
+        ldi r2, SIZE_OF_SHIP       // 
+        st r2, r0                 //
+
+    fi
+
+    ldi r3, COMP_SHIPS      //
+    ld r3, r0              //
+    dec r0                // decrease a number of Computer's ship
+    st r3, r0            //
+
+    ldi r2, PREVIOUS_HIT             //
+    ld r2, r1                       //
+    inc r1                         // update PREVIOUS_HIT
+    st r2, r1                     //
+
+    ldi r2, PLAYERS_TURN        //
+    ld r2, r2                  // saving selected cell in HIT_CELLx 
+    st r1, r2                 // 
+
+    ldi r1, NUM_OF_HITS        //
+    ld r1, r2                 //
+    inc r2                   // increase a number of hit cells
+    st r1, r2               //
+    
+    ldi r3, SIZE_OF_SHIP                   //
+    ld r3, r3                             //
+    if                                   //
+        cmp r2, r3                      // if (SIZE_OF_SHIP==NUM_OF_HITS) then (print_killed_ship and return defualt state of global vars)
+    is eq                              //
+        jsr print_killed_ship         //   
+        jsr default_state            //
+    fi                              //
+    ldi r0, PLAYERS_TURN
+    ldi r1, 0
+    st r0, r1
+    br waiting_for_turn
+
 
 print_square:
     ldi r2, X_CURSOR
@@ -92,4 +133,9 @@ print_square:
     st r2, r3
     rts
 
+print_killed_ship:
+    rts
+
+default_state:
+    rts
 end.
