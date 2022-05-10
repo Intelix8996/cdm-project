@@ -18,7 +18,8 @@ main:
     ldi r0, NUM_OF_HITS
     ld r0, r0
 loop:
-    ldi r1, HIT_X_COORD1
+/* choosing a cell of a ship to mark as killed */
+    ldi r1, HIT_X_COORD1            
     add r0, r1
     dec r1
     ld r1, r1
@@ -39,24 +40,25 @@ loop:
     st r3, r1
     inc r1
     ld r1, r1
-    st r2, r1
-
+    st r2, r1                       
+/* end of choosing */
     push r0
 
+/*  Mark cell on the right */
     ldi r1, X_CURSOR
     ld r1, r2   
 
     ldi r3, 28
     if
-        cmp r3, r2
+        cmp r3, r2  // checking if there is a cell on the right that can be marked as hit
     is gt, and
-        ldi r3, NUM_CELL
-        ld r3, r3
-        inc r3
-        ld r3, r3
-        ldi r0, 0x81
-        and r0, r3
-        tst r3
+        ldi r3, NUM_CELL    //
+        ld r3, r3          //
+        inc r3            //
+        ld r3, r3        // checking if this cell is marked already or not
+        ldi r0, 0x81    //
+        and r0, r3     //
+        tst r3        //
     is z
         inc r2
         inc r2
@@ -75,15 +77,15 @@ loop:
         dec r2
         st r1, r2
     fi
-
+/*  Mark cell on the left */
     ldi r3, 1
     if
-        cmp r2, r3
+        cmp r2, r3 // checking if there is a cell on the left that can be marked as hit
     is gt, and
         ldi r3, NUM_CELL
         ld r3, r3
         dec r3
-        ld r3, r3
+        ld r3, r3          // checking if this cell is marked already or not
         ldi r0, 0x81
         and r2, r0
         tst r3
@@ -105,6 +107,7 @@ loop:
         inc r2
         st r1, r2
     fi
+/* Simialr procedure for marking cells below and above*/
 
     ldi r1, Y_CURSOR
     ld r1, r0
@@ -173,7 +176,7 @@ loop:
         st r1, r0
     fi
 
-    rcall 1, 0
+    rcall 1, 0 // call a module that marks diagonal cell relative to a selected
     
     pop r0
     dec r0
