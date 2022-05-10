@@ -7,7 +7,7 @@
 #define PLAYER_SHIPS    0x03 // Addr of a number of Player's live ships. 0 <= *PLAYER_SHIPS <= 20
 
 #define NUM_CELL        0x04 // Addr of a number of a cell a cursos is pointing to. 0x80 <= *NUM_CELL <= 0xe4
-#define PLAYERS_TURN    0x05 // Contains 1 if Player have made a turn and 0 if not
+#define PLAYERS_TURN    0x05 // Contains a cell, that Player have chose
 #define SIZE_OF_SHIP    0x06 // Contains information about a size of a ship to which a hit cell belongs
 #define DIR_OF_HITS     0x07 // Contains information about direction of a ship relative to a first hit cell
 
@@ -18,6 +18,16 @@
 
 #define HIT_CELL3       0x0c // Number of a cell that was hit the third
 #define HIT_CELL4       0x0d // Number of a cell that was hit the fourth
+#define HIT_X_COORD1    0x0e // X coordinate of a cell that was hit the first
+#define HIT_X_COORD2    0x0f // X coordinate of a cell that was hit the second
+
+#define HIT_X_COORD3    0x10 // X coordinate of a cell that was hit the third
+#define HIT_X_COORD4    0x11 // X coordinate of a cell that was hit the fourth
+#define HIT_Y_COORD1    0x12 // Y coordinate of a cell that was hit the first
+#define HIT_Y_COORD2    0x13 // Y coordinate of a cell that was hit the second
+
+#define HIT_Y_COORD3    0x14 // Y coordinate of a cell that was hit the third
+#define HIT_Y_COORD4    0x15 // Y coordinate of a cell that was hit the fourth
 
 
 #endif

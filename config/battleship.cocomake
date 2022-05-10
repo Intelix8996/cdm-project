@@ -6,6 +6,8 @@ battleship.img
 4:battleship_arbiter.asm
 5:battleship_computers_turn.asm
 6:battleship_players_turn.asm
+7:battleship_print_killed_ship_1.asm
+8:battleship_print_killed_ship_2.asm
 100:battleship_map0.asm
 101:battleship_map0.asm
 102:battleship_map0.asm

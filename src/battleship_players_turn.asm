@@ -78,6 +78,22 @@ hit_proccessing:
     ld r2, r2                  // saving selected cell in HIT_CELLx 
     st r1, r2                 // 
 
+    inc r1                      //
+    inc r1                     //
+    inc r1                    //
+    inc r1                   // save X coordinate of a hit cell
+    ldi r2, X_CURSOR        //
+    ld r2, r2              //
+    st r1, r2             //
+
+    inc r1                      //
+    inc r1                     //
+    inc r1                    //
+    inc r1                   // save Y coordinate of a hit cell
+    ldi r2, Y_CURSOR        //
+    ld r2, r2              //
+    st r1, r2             //
+
     ldi r1, NUM_OF_HITS        //
     ld r1, r2                 //
     inc r2                   // increase a number of hit cells
@@ -134,6 +150,7 @@ print_square:
     rts
 
 print_killed_ship:
+    rcall 1, 0
     rts
 
 default_state:
