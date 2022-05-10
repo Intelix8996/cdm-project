@@ -146,6 +146,23 @@ rts          # Return from function
 
 ```
 
+In this example we return from ISR and restore registers:
+```c
+
+# Begining of ISR
+
+pushall      # Save registers
+
+# Some code...
+
+ldi r0, 0xF0 # Let controller be on address 0xF0
+ldi r1, 0x81 # "Return and restore" command
+st r0, r1    # Write command to controller
+popall       # Restore registers
+rti          # Return from ISR
+
+```
+
 (It switches banks by forming high part of address.)
 
 
@@ -163,7 +180,7 @@ The heart of this device is `Sequencer`. It is used to execute commands. `C2` is
 
 `D2` - trigger that indicates that device is executing some commnd, its /Q output is connected to `IR Enable` output to disable interrupts while we performing a jump.
 
-`How it works....`
+**How it works....**
 
 Executing a command (jump to bank, return):
 
@@ -176,7 +193,7 @@ Executing a command (jump to bank, return):
 + `Sequencer` execute some commands depending on 
 task and then resets and disables itself and enables interrupts.
 
-Handling an interrupt:
+**Handling an interrupt:**
 
 + When processor starts handling an interrupt, `IAck` goes high.
 
@@ -186,12 +203,35 @@ Handling an interrupt:
 
 + Then, regular 'jump to bank N' command is executed.
 
-`About timings...`
+**Commands:**
 
-+ Regular
-+ Return
-+ Interrupt
-+ Long interrupt
+*'jump to bank N':* 
+
+Command will look like number in range `0x00`-`0x7F`, so general view is `0b0nnnnnnn`, where `nnnnnnn` is target bank number in binary
+
++ `rti` is low, `pop` is low, `push` is high
++ `inc` - increnent `C1` 
++ `store` - write `R1` to `S1` at address in `C1`
++ Then, `0b0nnnnnnn` is present on `Address Out` and theese are higher bits of ROM address
+
+*'return from bank':*
+
+Command is `0x80` or `0b10000000`. 
+
++ `rti` is low, `pop` is high, `push` is low
++ `dec` - decrement `C1`
++ Then, previous bank number is present on `Address Out`
+
+*'return from bank and restore registers':*
+
+Command is `0x81` or `0b10000001`.
+
++ The same as in regular 'return from bank', but `rti` is high.
++ `rti` switches multiplexer and sequencer start a couple of clock cycles later. That gives processor time to perform `popall` instuction.
+
+All timings in clock-perfect amd were calculated for cdm8 mark 5.
+
+*maybe timing diagram*
 
 ### RAM Controller
 
