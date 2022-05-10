@@ -11,6 +11,8 @@
 
 #define P_COMP_MAP              0x00        // Number of a RAM page with Computer map
 #define P_PLAYER_MAP            0x01        // Number of a RAM page with player map
+#define COMP_VARS               0x02        // Number of a RAM page with global vars for Computer's turns
+#define PLAYERS_VARS            0x03        // Number of a RAM page with global vars for Player's turns
 #define FIRST_MAP               100         // Number of a bank that holds firts map
 
 #endif

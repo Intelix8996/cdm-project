@@ -42,12 +42,13 @@ loop:
     then               //
         br loop       //
     fi               
+    
 // end of loop //
 
     if
         tst r0
     is z
-        //print("WIN")
+        halt
     else
         //print("LOSE")
     fi
