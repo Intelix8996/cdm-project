@@ -97,7 +97,101 @@ Typically, devices have general singals on their's north side and data bus pins 
 
 ![Connecting device to IO bus](img/device_connection.PNG)
 
+### Utility Devices
+
+The some utility devices.
+
+![Utility Devices](img/utility_devices.PNG)
+
++ Front Detectors - two types of regular front detectors with shorter and longer pulse time.
++ 8-OR - Fancy 8 input OR gate.
+
 ### ROM Controller
+
+This contoller is used to work with memory banks. It handles bank switching.  Moreover it takes part in interrupt handling, when interrupt occurs, controller switches bank to one that specified on `ISR Bank` input.
+
+When jumping to bank, it saves current bank, it gives ability to jump to bank and then return from it just like regular `jsr` and `rts`. Moreover it supports recursive calls.
+
+![Jumping to banks](img/banks.png)
+
++ Programmer can switch between banks by writing a number N in range 0x00-0x7F. Then controller will switch to bank N.
+
++ By writing 0x80 or 0x81 we can reutrn from bank.
+
++ 0x80 is used to return from bank in general. 
+
++ 0x81 is used to ruturn from bank and restore registes.
+
++ If we read from it we get current bank.
+
+To perform a jump you need to specify bank and address in this bank to jump to.
+
+In this example we jump to bank 2 address 0x00:
+```c
+
+ldi r0, 0xF0 # Let controller be on address 0xF0
+ldi r1, 0x02 # Jump to bank 2
+st r0, r1    # Write command to controller
+jsr 0x00     # Jump some address in target block
+
+```
+
+In this example we return from bank:
+```c
+
+ldi r0, 0xF0 # Let controller be on address 0xF0
+ldi r1, 0x80 # "Return" command
+st r0, r1    # Write command to controller
+rts          # Return from function
+
+```
+
+(It switches banks by forming high part of address.)
+
+
+![ROM controller](img/rom_controller.PNG)
+
+`S1` - memory chip that together with counter `C1` forms stack, so we can perform push and pop.
+
+`R1` - intermediate register that stores byte (command) that was written.
+
+The heart of this device is `Sequencer`. It is used to execute commands. `C2` is a counter that outputs current phase, its output is connected to decoder to convert binary number to separate signal representing phases. `D3` - trigger that enables counter. 
+
+`Delay chain` is another important block of this device. It delays the pulse that starts `Sequencer` by certain amount of clock cycles. 
+
+`D1` - trigger that indicates that device is handling interrupt.
+
+`D2` - trigger that indicates that device is executing some commnd, its /Q output is connected to `IR Enable` output to disable interrupts while we performing a jump.
+
+`How it works....`
+
+Executing a command (jump to bank, return):
+
++ When processor writes a command: command is present in `R1`, `Write_Clock` is high, `rti`, `pop`, `push` signals are decoded.
+
++ `Write_Clock` sets `D2` high and so disables interrupts
+
++ `Write_Clock` starts a `Delay chain`, a pulse travels through `Delay chain` and then sets `D3` high and so enables `Sequencer`.
+
++ `Sequencer` execute some commands depending on 
+task and then resets and disables itself and enables interrupts.
+
+Handling an interrupt:
+
++ When processor starts handling an interrupt, `IAck` goes high.
+
++ `IAck` sets `D3` high enabling sequencer and sets `D1` high. 
+
++ `IR` switches `S1` data bus to `ISR Bank` input, setting target bank to bank with ISR's.
+
++ Then, regular 'jump to bank N' command is executed.
+
+`About timings...`
+
++ Regular
++ Return
++ Interrupt
++ Long interrupt
 
 ### RAM Controller
 
@@ -168,7 +262,7 @@ Additional pins:
 
 ![Terminal Controller](img/terminal_internals.PNG)
 
-This controller basically just connects tarminal and keyboard to bus in a way that when writing, 7 bits of data (as ASCII symbol) goes to the terminal and `last bit of data AND Write` forms `Terminal Clear` signal. That means that we can write a character to terminal as well as clear it by sending `0x80`.
+This controller basically just connects terminal and keyboard to bus in a way that when writing, 7 bits of data (as ASCII symbol) goes to the terminal and `last bit of data AND Write` forms `Terminal Clear` signal. That means that we can write a character to terminal as well as clear it by sending `0x80`.
 
 When reading keyboard buffer connects to 7 bits of data bus and `Keybaord Available` goes to the last bit of data bus. That helps to read out a whole buffer. Just read from this device while data is not equal to `0x80`.
 
