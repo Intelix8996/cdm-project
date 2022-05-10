@@ -102,11 +102,13 @@ hit_proccessing:
     ldi r3, SIZE_OF_SHIP                   //
     ld r3, r3                             //
     if                                   //
-        cmp r2, r3                      // if (SIZE_OF_SHIP==NUM_OF_HITS) then (print_killed_ship and return defualt state of global vars)
+        cmp r2, r3                      // 
     is eq                              //
-        jsr print_killed_ship         //   
-        jsr default_state            //
-    fi                              //
+        rcall 1, 0                    //   if (SIZE_OF_SHIP==NUM_OF_HITS) then (call print_killed_ship and return defualt state of global vars)
+        ldi r0, NUM_OF_HITS          //
+        ldi r1, 0                   //
+        st r0, r1                  //
+    fi                            //
     ldi r0, PLAYERS_TURN
     ldi r1, 0
     st r0, r1
@@ -148,11 +150,5 @@ print_square:
     pop r3
     st r2, r3
     rts
-
-print_killed_ship:
-    rcall 1, 0
-    rts
-
-default_state:
-    rts
+    
 end.

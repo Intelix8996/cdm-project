@@ -21,7 +21,7 @@ main:
         ld r3, r3
         inc r3
         push r2
-        ldi r2, 10
+        ldi r2, -10
         add r2, r3
         ld r3, r3
         ldi r2, 0x81
@@ -37,7 +37,7 @@ main:
         st r1, r0
         pushall
         ldi r1, 1
-        ldi r0, 10
+        ldi r0, -10
         jsr print_square
         popall
         sub r3, r0
@@ -59,7 +59,7 @@ main:
         ld r3, r3
         dec r3
         push r2
-        ldi r2, -10
+        ldi r2, 10
         add r2, r3
         ld r3, r3
         ldi r2, 0x81
@@ -76,7 +76,7 @@ main:
         inc r1
         st r1, r0
         pushall
-        ldi r0, -10
+        ldi r0, 10
         ldi r1, -1
         jsr print_square
         popall
@@ -98,7 +98,7 @@ main:
         ld r3, r3
         dec r3
         push r2
-        ldi r2, 10
+        ldi r2, -10
         add r2, r3
         ld r3, r3
         ldi r2, 0x81
@@ -114,7 +114,7 @@ main:
         inc r1
         st r1, r0
         pushall
-        ldi r0, 10
+        ldi r0, -10
         ldi r1, -1
         jsr print_square
         popall
@@ -137,7 +137,7 @@ main:
         ld r3, r3
         inc r3
         push r2
-        ldi r2, -10
+        ldi r2, 10
         add r2, r3
         ld r3, r3
         ldi r2, 0x81
@@ -153,7 +153,7 @@ main:
         inc r1
         st r1, r0
         pushall
-        ldi r0, -10
+        ldi r0, 10
         ldi r1, 1
         jsr print_square
         popall

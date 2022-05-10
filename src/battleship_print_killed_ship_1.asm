@@ -5,6 +5,16 @@
 
 asect 0
 main:
+    ldi r2, 0                                    //
+    ld r2, r0 // x-coordinate in r0             //
+    inc r2                                     //
+    ld r2, r1 // y-coordinate in r1           //
+    ldi r2, DISP_B_ADDR                      // clears current cursor position
+    st r2, r0                               //
+    st r2, r1                              //
+    ldi r3, 0b10100000                    //
+    st r2, r3                            //
+    
     ldi r0, NUM_OF_HITS
     ld r0, r0
 loop:
@@ -105,7 +115,7 @@ loop:
     is gt, and
         ldi r3, NUM_CELL
         ld r3, r3
-        ldi r2, 10
+        ldi r2, -10
         add r2, r3
         ld r3, r3
         ldi r2, 0x81
@@ -119,7 +129,7 @@ loop:
         pushall
         ldi r3, NUM_CELL
         ld r3, r3
-        ldi r0, 10
+        ldi r0, -10
         add r0, r3
         ldi r0, H_EMP_CELL
         st r3, r0
@@ -137,7 +147,7 @@ loop:
     is gt, and
         ldi r3, NUM_CELL
         ld r3, r3
-        ldi r2, -10
+        ldi r2, 10
         add r2, r3
         ld r3, r3
         ldi r2, 0x81
@@ -151,7 +161,7 @@ loop:
         pushall
         ldi r3, NUM_CELL
         ld r3, r3
-        ldi r0, -10
+        ldi r0, 10
         add r0, r3
         ldi r0, H_EMP_CELL
         st r3, r0
@@ -162,8 +172,6 @@ loop:
         inc r0
         st r1, r0
     fi
-
-    rcall 1, 0
     
     pop r0
     dec r0
@@ -173,7 +181,9 @@ loop:
         br loop
     fi
 
-halt
+    rcall 1, 0
+
+mret
         
 
 print_square:
