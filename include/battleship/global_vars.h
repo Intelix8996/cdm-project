@@ -8,26 +8,26 @@
 
 #define NUM_CELL        0x04 // Addr of a number of a cell a cursos is pointing to. 0x80 <= *NUM_CELL <= 0xe4
 #define PLAYERS_TURN    0x05 // Contains a cell, that Player have chose
-#define SIZE_OF_SHIP    0x86 // Contains information about a size of a ship to which a hit cell belongs
-#define DIR_OF_HITS     0x87 // Contains information about direction of a ship relative to a first hit cell
+#define SIZE_OF_SHIP    0xe8 // Contains information about a size of a ship to which a hit cell belongs
+#define DIR_OF_HITS     0xe9 // Contains information about direction of a ship relative to a first hit cell
 
-#define NUM_OF_HITS     0x88 // Contains a number of hit cells of attacked ship
-#define PREVIOUS_HIT    0x89 // Contains number of cell that was hit in previous turn
-#define HIT_CELL1       0x8a // Number of a cell that was hit the first
-#define HIT_CELL2       0x8b // Number of a cell that was hit the second
+#define NUM_OF_HITS     0xea // Contains a number of hit cells of attacked ship
+#define PREVIOUS_HIT    0xeb // Contains number of cell that was hit in previous turn
+#define HIT_CELL1       0xec // Number of a cell that was hit the first
+#define HIT_CELL2       0xed // Number of a cell that was hit the second
 
-#define HIT_CELL3       0x8c // Number of a cell that was hit the third
-#define HIT_CELL4       0x8d // Number of a cell that was hit the fourth
-#define HIT_X_COORD1    0x8e // X coordinate of a cell that was hit the first
-#define HIT_X_COORD2    0x8f // X coordinate of a cell that was hit the second
+#define HIT_CELL3       0xee // Number of a cell that was hit the third
+#define HIT_CELL4       0xef // Number of a cell that was hit the fourth
+#define HIT_X_COORD1    0xf0 // X coordinate of a cell that was hit the first
+#define HIT_X_COORD2    0xf1 // X coordinate of a cell that was hit the second
 
-#define HIT_X_COORD3    0x90 // X coordinate of a cell that was hit the third
-#define HIT_X_COORD4    0x91 // X coordinate of a cell that was hit the fourth
-#define HIT_Y_COORD1    0x92 // Y coordinate of a cell that was hit the first
-#define HIT_Y_COORD2    0x93 // Y coordinate of a cell that was hit the second
+#define HIT_X_COORD3    0xf2 // X coordinate of a cell that was hit the third
+#define HIT_X_COORD4    0xf3 // X coordinate of a cell that was hit the fourth
+#define HIT_Y_COORD1    0xf4 // Y coordinate of a cell that was hit the first
+#define HIT_Y_COORD2    0xf5 // Y coordinate of a cell that was hit the second
 
-#define HIT_Y_COORD3    0x94 // Y coordinate of a cell that was hit the third
-#define HIT_Y_COORD4    0x95 // Y coordinate of a cell that was hit the fourth
+#define HIT_Y_COORD3    0xf6 // Y coordinate of a cell that was hit the third
+#define HIT_Y_COORD4    0xf7 // Y coordinate of a cell that was hit the fourth
 
 
 

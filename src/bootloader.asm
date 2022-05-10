@@ -1,7 +1,7 @@
 #include <devices.h>
 #include <call.h>
 
-#define STACK_OFFSET    -128    // Stack offset
+#define STACK_OFFSET    -144    // Stack offset
 
 asect 0
 
