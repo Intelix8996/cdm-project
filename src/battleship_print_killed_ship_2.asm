@@ -17,15 +17,12 @@ main:
     is gt, and
         cmp r3, r0
     is gt, and
-        ldi r3, NUM_CELL
-        ld r3, r3
-        inc r3
         push r2
+        push r0
         ldi r2, -10
-        add r2, r3
-        ld r3, r3
-        ldi r2, 0x81
-        and r2, r3
+        ldi r0, 1
+        jsr check_if_printed
+        pop r0
         pop r2
         tst r3
     is z
@@ -55,15 +52,12 @@ main:
     is gt, and
         cmp r0, r3
     is gt, and
-        ldi r3, NUM_CELL
-        ld r3, r3
-        dec r3
         push r2
+        push r0
         ldi r2, 10
-        add r2, r3
-        ld r3, r3
-        ldi r2, 0x81
-        and r2, r3
+        ldi r0, -1
+        jsr check_if_printed
+        pop r0
         pop r2
         tst r3
     is z
@@ -94,15 +88,12 @@ main:
         ldi r3, 28
         cmp r0, r3
     is lt, and
-        ldi r3, NUM_CELL
-        ld r3, r3
-        dec r3
         push r2
+        push r0
         ldi r2, -10
-        add r2, r3
-        ld r3, r3
-        ldi r2, 0x81
-        and r2, r3
+        ldi r0, -1
+        jsr check_if_printed
+        pop r0
         pop r2
         tst r3
     is z
@@ -133,15 +124,12 @@ main:
         ldi r3, 1
         cmp r0, r3
     is gt, and
-        ldi r3, NUM_CELL
-        ld r3, r3
-        inc r3
         push r2
+        push r0
         ldi r2, 10
-        add r2, r3
-        ld r3, r3
-        ldi r2, 0x81
-        and r2, r3
+        ldi r0, 1
+        jsr check_if_printed
+        pop r0
         pop r2
         tst r3
     is z
@@ -168,7 +156,15 @@ main:
     mret
 
 
-
+check_if_printed:
+    ldi r3, NUM_CELL
+    ld r3, r3
+    add r0, r3
+    add r2, r3
+    ld r3, r3
+    ldi r2, 0x81
+    and r2, r3
+    rts
 
 
 print_square:

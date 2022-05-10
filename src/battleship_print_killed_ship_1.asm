@@ -172,6 +172,8 @@ loop:
         inc r0
         st r1, r0
     fi
+
+    rcall 1, 0
     
     pop r0
     dec r0
@@ -180,8 +182,6 @@ loop:
     is gt
         br loop
     fi
-
-    rcall 1, 0
 
 mret
         

@@ -11,10 +11,18 @@ up:
     ldi r2, X_CURSOR     //
     ld r2, r0           // x-coordinate in r0
     inc r2             // y-coordinate in r1
-    ld r2, r1         // 
-    inc r1
-    inc r1
-    inc r1
+    ld r2, r1         //
+
+    ldi r3, 28                 //
+    if                        //
+        cmp r3, r1           //
+    is z                    //
+        ldi r1, 1          // checking boundaries
+    else                  //
+        inc r1           //
+        inc r1          //
+        inc r1         //
+    fi                //
     st r2, r1
 
     ldi r2, DISP_B_ADDR         //
@@ -39,9 +47,17 @@ down:
     ld r2, r0           // x-coordinate in r0
     inc r2             // y-coordinate in r1
     ld r2, r1         // 
-    dec r1
-    dec r1
-    dec r1
+    
+    ldi r3, 1                  //
+    if                        //
+        cmp r3, r1           //
+    is z                    //
+        ldi r1, 28         // checking boundaries
+    else                  //
+        dec r1           //
+        dec r1          //
+        dec r1         //
+    fi                //
     st r2, r1
 
     ldi r2, DISP_B_ADDR         //
@@ -67,9 +83,17 @@ left:
     inc r2             // y-coordinate in r1
     ld r2, r1         // 
     dec r2
-    dec r0
-    dec r0
-    dec r0
+    
+    ldi r3, 1                  //
+    if                        //
+        cmp r3, r0           //
+    is z                    //
+        ldi r0, 28         // checking boundaries
+    else                  //
+        dec r0           //
+        dec r0          //
+        dec r0         //
+    fi                //
     st r2, r0
        
     ldi r2, DISP_B_ADDR         //
@@ -94,9 +118,17 @@ right:
     inc r2             // y-coordinate in r1
     ld r2, r1         // 
     dec r2
-    inc r0
-    inc r0
-    inc r0
+
+    ldi r3, 28                 //
+    if                        //
+        cmp r3, r0           //
+    is eq                   //
+        ldi r0, 1          // checking boundaries
+    else                  //
+        inc r0           //
+        inc r0          //
+        inc r0         //
+    fi                //
     st r2, r0
 
     ldi r2, DISP_B_ADDR         //
