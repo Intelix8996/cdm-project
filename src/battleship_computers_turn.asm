@@ -35,11 +35,16 @@ start:
         wend
         // random X coordinate in r0
         // random Y coordinate in r1
-        br check
+        br first_hit
     fi
-    halt
+    dec r0
+    if 
+        tst r0
+    is z
+        br
+    fi
     
-check:
+first_hit:
 /* calculating number of cell by known coordinates */
     push r1
     ldi r3, 9
@@ -125,10 +130,12 @@ check:
 
     ldi r3, 0b11100001
     jsr print_square
+    
     br start
     
 
-    halt
+
+
 
 
 print_square:
