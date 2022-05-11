@@ -36,12 +36,22 @@ start:
         // random X coordinate in r0
         // random Y coordinate in r1
         br first_hit
+    else
+        ldi r1, SIZE_OF_SHIP
+        ld r1, r1
+        if
+            cmp r1, r0
+        is eq
+            //killed
+            br start
+        fi
     fi
     dec r0
     if 
         tst r0
     is z
-        br
+        rcall 1, 0          // go to second hit module
+        mret
     fi
     
 first_hit:
@@ -108,6 +118,9 @@ first_hit:
     st r3, r0            //
     st r0, r2           //
 
+    ldi r3, K_CELL     //
+    st r2, r3         // mark cell as a killed ship cell
+
     ld r2, r0                     //
     shra r0                      //
     shra r0                     //
@@ -132,10 +145,6 @@ first_hit:
     jsr print_square
     
     br start
-    
-
-
-
 
 
 print_square:
