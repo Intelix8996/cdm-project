@@ -180,9 +180,9 @@ The heart of this device is `Sequencer`. It is used to execute commands. `C2` is
 
 `D2` - trigger that indicates that device is executing some commnd, its /Q output is connected to `IR Enable` output to disable interrupts while we performing a jump.
 
-**How it works....**
+*How it works....*
 
-Executing a command (jump to bank, return):
+**Executing a command (jump to bank, return):**
 
 + When processor writes a command: command is present in `R1`, `Write_Clock` is high, `rti`, `pop`, `push` signals are decoded.
 
@@ -249,11 +249,13 @@ All timings in clock-perfect amd were calculated for cdm8 mark 5.
 
 ### IO Seven Segment Display Controller
 
-### IO Hardware Stack
+### IO Hardware Stack ?
 
 ### IO Random Number Generator
 
 ### Display Controller
+
+![Monocrome Display Controller](img/video_controller.PNG)
 
 ### Joystick Controller
 
