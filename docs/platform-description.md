@@ -255,6 +255,123 @@ All timings in clock-perfect amd were calculated for cdm8 mark 5.
 
 ### Display Controller
 
+This controller is used to drive logisim's 32x32 pixel LED matrix *(mode 3 - "Select Rows/Columns")*.
+
+It has monochrome and color versions.
+
+![Monocrome Display Controller Connection](img/mono_display_connection.PNG)
+
+We can write bytes to it and thus send data or commands. If we read from it, we get last command or data written.
+
+**Available commands:** 
+
++ Write a pixel at (X, Y)
++ Write a block of pixels at (X, Y)
++ Clear screen and then write a pixel at (X, Y)
++ Clear screen and then write a block of pixels at (X, Y)
++ Clear screen
+
+You can send either a data byte or a command byte.
+
+**Data** byte looks like this: `0b0ddddddd`
+
++ Its most significat bit is zero, it indicates that it is data byte.
+
++ `ddddddd` - 7-bit data word (X, Y, Pattern/Mask).
+
+**Command** byte looks like this: `0b1lwcxbgr`
+
++ Its most significat bit is one, it indicates that it is command byte.
+
++ `l` - bLock, if zero - print single pixel, if one - block of pixels.
+
++ `w` - write, if zero - don't print anything, if one - print something.
+
++ `c` - clear, if zero - don't clear screen, if one - clear screen before other actions.
+
++ `x` - not used
+
++ `b` - blue component
+
++ `g` - green component
+
++ `r` - red component
+
+Color components are 1-bit so we get 3-bit color and thus we can have up to 8 colors *(black is also a color, it is coded `0b00000000`)*.
+
+In monocrome mode only `r` component is used, it defines whether pixel is on or off.
+
+**Command examples:**
+
++ `0b10010000` - clear screen
+
++ `0b10100001` - write red pixel
+
++ `0b11100010` - write block of green pixels
+
++ `0b10110100` - clear display and then write blue pixel
+
++ `0b11110001` - clear display and then write block of red pixels
+
+**How to send commands:**
+
++ To perform **clear** command we just send one byte with command itself.
+
++ To perform **single pixel write** commands *(including ones with clear)* we need to send three bytes: first byte is `X`, second byte is `Y`, third byte is command itself.
+
++ To perform **block pixel write** commands *(including ones with clear)* we need to send four bytes: first byte is `mask`, second byte is `X`, third byte is `Y`, fourh byte is command itself.
+
+> (0, 0) is in the lower left corner
+
+**Code samples:**
+
+In this example we print green pixel at (10, 15):
+```c
+
+ldi r0, 10          # X
+ldi r1, 15          # Y
+ldi r2, 0xF6        # Controller address
+ldi r3, 0b10100010  # Print green pixel command
+
+st r2, r0           # Write X
+st r2, r1           # Write Y
+st r2, r3           # Write Command
+
+```
+
+In this example we clear screen and then print block of red pixels at (6, 5):
+```c
+
+ldi r0, 6           # X
+ldi r1, 5           # Y
+ldi r2, 0xF6        # Controller address
+ldi r3, 0x55        # Mask (0b01010101)
+
+st r2, r3           # Write Mask
+st r2, r0           # Write X
+st r2, r1           # Write Y
+
+ldi r3, 0b11110001  # Clear screen and print 
+                      a block of green pixels
+
+st r2, r3           # Write Command
+
+```
+
+In this example we simply clear screen:
+```c
+
+ldi r2, 0xF6        # Controller address
+ldi r3, 0b10010000  # Clear screen command
+
+st r2, r3           # Write command
+
+```
+
+`**IMAGESSS**`
+
+Now we will focus on monochrome version. More about displaying color later.
+
 ![Monocrome Display Controller](img/video_controller.PNG)
 
 ### Joystick Controller
