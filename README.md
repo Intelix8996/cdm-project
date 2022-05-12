@@ -1,5 +1,8 @@
-# Cdm8-Based Universal Platform 
+# Cdm8-Based Modular Platform 
 ## Group project
+### [Documentation](docs/platform-description.md)
+### Sources [here](include/) and [here](src/)
+### [Main Scheme](logisim/cdm-platform.circ) and [Component Library](logisim/CdM8_mb5_library.circ)
 ---
 ### Repin Nikolay - Hardware Design
 ### Nikita Tatarinov - Software Design
