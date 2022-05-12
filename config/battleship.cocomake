@@ -4,11 +4,12 @@ battleship.img
 2:battleship_main.asm
 3:battleship_draw_map.asm
 4:battleship_arbiter.asm
-5:battleship_computers_turn_1.asm
-6:battleship_computers_turn_2.asm
-7:battleship_players_turn.asm
-8:battleship_print_killed_ship_1.asm
-9:battleship_print_killed_ship_2.asm
+5:battleship_computers_turn_0.asm
+6:battleship_computers_turn_1.asm
+7:battleship_computers_turn_2.asm
+8:battleship_players_turn.asm
+9:battleship_print_killed_ship_1.asm
+10:battleship_print_killed_ship_2.asm
 100:battleship_map0.asm
 101:battleship_map0.asm
 102:battleship_map0.asm

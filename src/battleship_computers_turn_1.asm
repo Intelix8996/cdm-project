@@ -4,55 +4,30 @@
 #include <battleship/map_constants.h>
 
 asect 0
-ldi r2, RAM_CONTROLLER_ADDR           //
-ldi r1, 1                            // Selecting 1 (Player's) map
-st r2, r1                           //
-
 start:
-    ldi r0, NUM_OF_HITS        //
-    ld r0, r0                 //
-    if                       // check if any ship is already found and hit
-        tst r0              // 
-    is z                   //
-        ldi r2, RANDOM_GEN_ADDR
-        ld r2, r0               
-        ld r2, r1               
-        ldi r3, 0b00011111
-        and r3, r0
-        and r3, r1
-        ldi r3, 10
-        while
-            cmp r0, r3
-        stays ge
-            sub r3, r0
-            neg r0
-        wend
-        while
-            cmp r1, r3
-        stays ge
-            sub r3, r1
-            neg r1
-        wend
-        // random X coordinate in r0
-        // random Y coordinate in r1
-        br first_hit
-    else
-        ldi r1, SIZE_OF_SHIP
-        ld r1, r1
-        if
-            cmp r1, r0
-        is eq
-            //killed
-            br start
-        fi
-    fi
-    dec r0
-    if 
-        tst r0
-    is z
-        rcall 1, 0          // go to second hit module
-        mret
-    fi
+    ldi r2, RANDOM_GEN_ADDR
+    ld r2, r0               
+    ld r2, r1               
+    ldi r3, 0b00011111
+    and r3, r0
+    and r3, r1
+    ldi r3, 10
+    while
+        cmp r0, r3
+    stays ge
+        sub r3, r0
+        neg r0
+    wend
+    while
+        cmp r1, r3
+    stays ge
+        sub r3, r1
+        neg r1
+    wend
+    ldi r0, 1 //del
+    ldi r1, 5
+    // random X coordinate in r0
+    // random Y coordinate in r1
     
 first_hit:
 /* calculating number of cell by known coordinates */
@@ -118,10 +93,10 @@ first_hit:
     st r3, r0            //
     st r0, r2           //
 
+    ld r2, r0           //
     ldi r3, K_CELL     //
     st r2, r3         // mark cell as a killed ship cell
-
-    ld r2, r0                     //
+                     
     shra r0                      //
     shra r0                     //
     shra r0                    // saving a size of a hit ship
@@ -143,8 +118,7 @@ first_hit:
 
     ldi r3, 0b11100001
     jsr print_square
-    
-    br start
+    mret
 
 
 print_square:

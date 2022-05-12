@@ -17,6 +17,8 @@ generating_random_direction:
     if
         ldi r3, 0b00000011
         and r3, r1    // 0 - up, 1 - right, 2 - down, 3 - left
+        ldi r1, 2 // del
+        tst r1
     is z
         if
             ldi r3, -10
@@ -29,14 +31,12 @@ generating_random_direction:
             shla r2
         is cc
             ldi r3, DIR_OF_HITS
+            ldi r1, 0
             st r3, r1
             pop r2
-            ldi r3, X_COMP_PTR
+            ldi r3, HIT_X_COORD1
             ld r3, r0
-            inc r3
-            inc r3
-            inc r3
-            inc r3
+            ldi r3, HIT_Y_COORD1
             ld r3, r1
             inc r1
             inc r1
@@ -62,14 +62,12 @@ generating_random_direction:
             shla r2
         is cc
             ldi r3, DIR_OF_HITS
+            ldi r1, 1
             st r3, r1
             pop r2
-            ldi r3, X_COMP_PTR
+            ldi r3, HIT_X_COORD1
             ld r3, r0
-            inc r3
-            inc r3
-            inc r3
-            inc r3
+            ldi r3, HIT_Y_COORD1
             ld r3, r1
             inc r0
             inc r0
@@ -96,14 +94,12 @@ generating_random_direction:
             shla r2
         is cc
             ldi r3, DIR_OF_HITS
+            ldi r1, 2
             st r3, r1
             pop r2
-            ldi r3, X_COMP_PTR
+            ldi r3, HIT_X_COORD1
             ld r3, r0
-            inc r3
-            inc r3
-            inc r3
-            inc r3
+            ldi r3, HIT_Y_COORD1
             ld r3, r1
             dec r1
             dec r1
@@ -129,14 +125,12 @@ generating_random_direction:
             shla r2
         is cc
             ldi r3, DIR_OF_HITS
+            ldi r1, 3
             st r3, r1
             pop r2
-            ldi r3, X_COMP_PTR
+            ldi r3, HIT_X_COORD1
             ld r3, r0
-            inc r3
-            inc r3
-            inc r3
-            inc r3
+            ldi r3, HIT_Y_COORD1
             ld r3, r1
             dec r0
             dec r0
@@ -149,6 +143,8 @@ generating_random_direction:
     fi
 
 end_of_generating_random_direction:
+    // r2 points to a selected cell
+    // r0 and r1 contain coordinates of a selected cell
     ld r2, r3
     if
         tst r3
@@ -159,7 +155,34 @@ end_of_generating_random_direction:
         jsr print_square
         mret
     fi
-    halt
+    ldi r3, HIT_X_COORD2
+    st r3, r0
+    ldi r3, HIT_Y_COORD2
+    st r3, r1
+
+    ldi r3, 0b11100001    
+    jsr print_square
+
+    ldi r3, PREVIOUS_HIT
+    ldi r0, HIT_CELL2
+    st r3, r0
+    st r0, r2
+
+    ldi r3, K_CELL     //
+    st r2, r3         // mark cell as a killed ship cell
+
+    ldi r3, NUM_OF_HITS
+    ld r3, r2
+    inc r2
+    st r3, r2
+
+    ldi r3, PLAYER_SHIPS //
+    ld r3, r0           //
+    dec r0             // decreasing a number of Player's ships
+    st r3, r0         //
+
+    mret
+
 
 
 
