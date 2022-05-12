@@ -127,7 +127,7 @@ When jumping to bank, it saves current bank, it gives ability to jump to bank an
 To perform a jump you need to specify bank and address in this bank to jump to.
 
 In this example we jump to bank 2 address 0x00:
-```armasm
+```c
 
 ldi r0, 0xF0 # Let controller be on address 0xF0
 ldi r1, 0x02 # Jump to bank 2
@@ -137,7 +137,7 @@ jsr 0x00     # Jump some address in target block
 ```
 
 In this example we return from bank:
-```armasm
+```c
 
 ldi r0, 0xF0 # Let controller be on address 0xF0
 ldi r1, 0x80 # "Return" command
@@ -147,7 +147,7 @@ rts          # Return from function
 ```
 
 In this example we return from ISR and restore registers:
-```armasm
+```c
 
 # Begining of ISR
 
@@ -326,7 +326,7 @@ In monocrome mode only `r` component is used, it defines whether pixel is on or 
 **Code samples:**
 
 In this example we print green pixel at (10, 15):
-```armasm
+```c
 
 ldi r0, 10          # X
 ldi r1, 15          # Y
@@ -342,7 +342,7 @@ st r2, r3           # Write Command
 ![](img/display_write_single_pixel.PNG)
 
 In this example we clear screen and then print block of red pixels at (6, 5):
-```armasm
+```c
 
 ldi r0, 6           # X
 ldi r1, 5           # Y
@@ -365,7 +365,7 @@ st r2, r3           # Write Command
 ![](img/display_write_block_of_pixels_with_marks.PNG)
 
 In this example we simply clear screen:
-```armasm
+```c
 
 ldi r2, 0xF6        # Controller address
 ldi r3, 0b10010000  # Clear screen command
