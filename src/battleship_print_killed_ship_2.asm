@@ -184,7 +184,8 @@ print_square:
     dec r0
     dec r1
 
-    ldi r2, DISP_B_ADDR
+    ldi r2, CUR_DISPLAY
+    ld r2, r2
     ldi r3, 0b11100110
     push r3
     ldi r3, 0b00000111

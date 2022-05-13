@@ -5,11 +5,12 @@
 
 asect 0
 main:
-    ldi r2, 0                                    //
-    ld r2, r0 // x-coordinate in r0             //
-    inc r2                                     //
-    ld r2, r1 // y-coordinate in r1           //
-    ldi r2, DISP_B_ADDR                      // clears current cursor position
+    ldi r2, 0                                     //
+    ld r2, r0 // x-coordinate in r0              //
+    inc r2                                      //
+    ld r2, r1 // y-coordinate in r1            //
+    ldi r2, CUR_DISPLAY                       // 
+    ld r2, r2                                // clears current cursor position
     st r2, r0                               //
     st r2, r1                              //
     ldi r3, 0b10100000                    //
@@ -197,23 +198,27 @@ print_square:
     dec r0
     dec r1
 
-    ldi r2, DISP_B_ADDR
-    ldi r3, 0b00000111
-    st r2, r3
-    st r2, r0
-    st r2, r1
-    ldi r3, 0b11100110
-    st r2, r3
+    ldi r2, CUR_DISPLAY
+    ld r2, r2
+
+    jsr label1
 
     inc r0
+
     ldi r3, 0b00000101
     st r2, r3
     st r2, r0
     st r2, r1
     ldi r3, 0b11100110
     st r2, r3
-
+    
     inc r0
+
+    jsr label1
+
+    rts
+    
+label1:
     ldi r3, 0b00000111
     st r2, r3
     st r2, r0
@@ -221,5 +226,6 @@ print_square:
     ldi r3, 0b11100110
     st r2, r3
     rts
+
 
 end.

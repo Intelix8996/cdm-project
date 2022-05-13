@@ -9,6 +9,10 @@ start:
     ldi r1, 0                            // Selecting 0 (Computer's) map
     st r2, r1                           //  
 
+    ldi r2, CUR_DISPLAY
+    ldi r1, DISP_B_ADDR
+    st r2, r1
+
     br waiting_for_turn
 
 

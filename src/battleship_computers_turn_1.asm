@@ -24,8 +24,6 @@ start:
         sub r3, r1
         neg r1
     wend
-    ldi r0, 1 //del
-    ldi r1, 5
     // random X coordinate in r0
     // random Y coordinate in r1
     
@@ -60,14 +58,12 @@ first_hit:
     move r0, r3
     add r3, r0
     add r3, r0
-    inc r0
+    inc r0          // X and Y display coordinates of a selected cell in r0 and r1
 
-    push r2
-    ldi r2, X_COMP_PTR
-    st r2, r0
-    inc r2
-    st r2, r1
-    pop r2
+    ldi r3, HIT_X_COORD1
+    st r3, r0
+    ldi r3, HIT_Y_COORD1
+    st r3, r1   
 
     ld r2, r3                        // addr of a selected cell in r2
     if                              //
@@ -75,10 +71,12 @@ first_hit:
     is cc                         //
         ldi r3, H_EMP_CELL       //
         st r2, r3               // check if a selected cell belongs to a ship
-        ldi r3, 0b11100100     //
+        ldi r3, 0b11100110     //
         jsr print_square      //
         mret                 //
     fi                      //
+    
+          
     
     ldi r3, PLAYER_SHIPS //
     ld r3, r0           //
@@ -104,17 +102,6 @@ first_hit:
     ldi r3, SIZE_OF_SHIP     //
     st r3, r0               //
 
-    ldi r2, HIT_X_COORD1          //
-    ldi r3, X_COMP_PTR           //
-    ld r3, r0                   //
-    st r2, r0                  //
-    inc r3                    //
-    inc r2                   // saving coordinates of a hit cell
-    inc r2                  //
-    inc r2                 //
-    inc r2                //
-    ld r3, r1            //
-    st r2, r1           //
 
     ldi r3, 0b11100001
     jsr print_square
@@ -122,9 +109,9 @@ first_hit:
 
 
 print_square:
-    ldi r2, X_COMP_PTR
+    ldi r2, HIT_X_COORD1
     ld r2, r0
-    inc r2
+    ldi r2, HIT_Y_COORD1
     ld r2, r1
     dec r0
     dec r1
