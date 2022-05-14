@@ -1,3 +1,4 @@
 firmware.img
 0:bootloader.asm
+2:display_print.asm
 5:app_example.asm
