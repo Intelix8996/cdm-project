@@ -186,7 +186,7 @@ print_square:
 
     ldi r2, CUR_DISPLAY
     ld r2, r2
-    ldi r3, 0b11100110
+    ldi r3, 0b11100100
     push r3
     ldi r3, 0b00000111
     st r2, r3

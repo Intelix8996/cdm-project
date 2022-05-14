@@ -153,7 +153,7 @@ end_of_generating_random_direction:
     is z
         ldi r3, H_EMP_CELL
         st r2, r3
-        ldi r3, 0b11100110    
+        ldi r3, 0b11100100    
         jsr print_square
         mret
     fi

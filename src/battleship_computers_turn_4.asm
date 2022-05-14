@@ -124,7 +124,7 @@ hit_proccessing:
     is cc                         //
         ldi r3, H_EMP_CELL       //
         st r2, r3               // check if a selected cell belongs to a ship or not
-        ldi r3, 0b11100110     //
+        ldi r3, 0b11100100     //
         jsr print_square      //
         ldi r3, DIR_OF_HITS
         ld r3, r3

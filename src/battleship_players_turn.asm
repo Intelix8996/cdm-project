@@ -34,7 +34,7 @@ check:
     is z
         ldi r0, H_EMP_CELL           //
         st r3, r0                   //
-        ldi r3, 0b11100110         // print blue square and return from module
+        ldi r3, 0b11100100         // print blue square and return from module
         jsr print_square          //
         ldi r2, PLAYERS_TURN     //
         ldi r3, 0               //

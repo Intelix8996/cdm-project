@@ -209,7 +209,7 @@ print_square:
     st r2, r3
     st r2, r0
     st r2, r1
-    ldi r3, 0b11100110
+    ldi r3, 0b11100100
     st r2, r3
     
     inc r0
@@ -223,7 +223,7 @@ label1:
     st r2, r3
     st r2, r0
     st r2, r1
-    ldi r3, 0b11100110
+    ldi r3, 0b11100100
     st r2, r3
     rts
 

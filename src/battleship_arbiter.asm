@@ -15,18 +15,20 @@ main:
     ld r2, r3                    // First player in r3
     ldi r0, 0b00000001          // 0 - Computer, 1 - Player
     and r0, r3                 //  
-    ldi r3, 0 //del
 // start of loop //    
 loop:
     if
-        tst r3                 //
-    is z                      // 
-        rcall 1, 0           //
-        ldi r3, 0           // if (r3==0) then (call Computer's turn module) else (call Players's turn module)
-    else                   //
-        rcall 2, 0        //
-        //ldi r3, 0
-        ldi r3, 1        //
+        tst r3                               //
+    is z                                    // 
+        jsr indicate_computers_turn        //
+        rcall 1, 0                        //
+        jsr turnoff_comp_ind             // if (r3==0) then (call Computer's turn module) else (call Players's turn module)
+        ldi r3, 1                       //
+    else                               //
+        jsr indicate_players_turn     //
+        rcall 6, 0                   //
+        jsr turnoff_pl_ind          //
+        ldi r3, 0
     fi
 
     ldi r2, COMP_SHIPS     //
@@ -50,8 +52,53 @@ loop:
     is z
         halt
     else
-        //print("LOSE")
+        halt
     fi
     mret
     
+
+indicate_players_turn:
+    ldi r2, DISP_B_ADDR
+    ldi r3, 0b10100111
+    jsr printpixels
+    rts
+
+
+indicate_computers_turn:
+    ldi r2, DISP_A_ADDR
+    ldi r3, 0b10100111
+    jsr printpixels
+    rts
+
+turnoff_pl_ind:
+    ldi r2, DISP_B_ADDR
+    ldi r3, 0b10100000
+    jsr printpixels
+    rts
+
+turnoff_comp_ind:
+    ldi r2, DISP_A_ADDR
+    ldi r3, 0b10100000
+    jsr printpixels
+    rts
+
+
+printpixels:
+    ldi r0, 13
+    ldi r1, 31
+    jsr printpix
+    inc r0
+    jsr printpix
+    inc r0
+    jsr printpix
+    inc r0
+    jsr printpix
+    rts
+
+
+printpix:
+    st r2, r0
+    st r2, r1
+    st r2, r3
+    rts
 end
