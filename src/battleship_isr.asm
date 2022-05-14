@@ -15,14 +15,28 @@ up:
 
     ldi r3, 28                 //
     if                        //
-        cmp r3, r1           //
-    is z                    //
-        ldi r1, 1          // checking boundaries
-    else                  //
-        inc r1           //
-        inc r1          //
-        inc r1         //
-    fi                //
+        cmp r3, r1           // checking boundaries
+    is eq                   //          
+        ldi r2, NUM_CELL
+        ld r2, r3
+        ldi r1, 90
+        add r1, r3
+        st r2, r3
+        ldi r1, 1
+    else                  
+        inc r1           
+        inc r1          
+        inc r1
+        ldi r2, NUM_CELL
+        ld r2, r3
+        push r0
+        ldi r0, -10
+        add r0, r3
+        st r2, r3
+        pop r0         
+    fi
+
+    ldi r2, Y_CURSOR                
     st r2, r1
 
     ldi r2, DISP_B_ADDR         //
@@ -31,11 +45,7 @@ up:
     ldi r3, 0b10100111       //
     st r2, r3               //
 
-    ldi r2, NUM_CELL
-    ld r2, r3
-    ldi r0, -10
-    add r0, r3
-    st r2, r3
+    
 
     br exit
 
@@ -50,14 +60,27 @@ down:
     
     ldi r3, 1                  //
     if                        //
-        cmp r3, r1           //
+        cmp r3, r1           // checking boundaries
     is z                    //
-        ldi r1, 28         // checking boundaries
-    else                  //
-        dec r1           //
-        dec r1          //
-        dec r1         //
-    fi                //
+        ldi r2, NUM_CELL
+        ld r2, r3
+        ldi r1, -90
+        add r1, r3
+        st r2, r3
+        ldi r1, 28
+    else                  
+        dec r1           
+        dec r1          
+        dec r1
+        ldi r2, NUM_CELL
+        ld r2, r3
+        push r0
+        ldi r0, 10
+        add r0, r3
+        st r2, r3
+        pop r0         
+    fi
+    ldi r2, Y_CURSOR                
     st r2, r1
 
     ldi r2, DISP_B_ADDR         //
@@ -66,11 +89,7 @@ down:
     ldi r3, 0b10100111       //
     st r2, r3               //
 
-    ldi r2, NUM_CELL
-    ld r2, r3
-    ldi r0, 10
-    add r0, r3
-    st r2, r3
+    
 
     br exit
 
@@ -82,18 +101,28 @@ left:
     ld r2, r0           // x-coordinate in r0
     inc r2             // y-coordinate in r1
     ld r2, r1         // 
-    dec r2
-    
+
+
     ldi r3, 1                  //
     if                        //
-        cmp r3, r0           //
+        cmp r3, r0           //  checking boundaries
     is z                    //
-        ldi r0, 28         // checking boundaries
-    else                  //
-        dec r0           //
-        dec r0          //
-        dec r0         //
-    fi                //
+        ldi r2, NUM_CELL
+        ld r2, r3
+        ldi r0, 9
+        add r0, r3
+        st r2, r3
+        ldi r0, 28         
+    else                  
+        dec r0           
+        dec r0          
+        dec r0 
+        ldi r2, NUM_CELL
+        ld r2, r3
+        dec r3
+        st r2, r3        
+    fi    
+    ldi r2, X_CURSOR            
     st r2, r0
        
     ldi r2, DISP_B_ADDR         //
@@ -102,10 +131,7 @@ left:
     ldi r3, 0b10100111       //
     st r2, r3               //
 
-    ldi r2, NUM_CELL
-    ld r2, r3
-    dec r3
-    st r2, r3
+    
 
     br exit
 
@@ -121,14 +147,25 @@ right:
 
     ldi r3, 28                 //
     if                        //
-        cmp r3, r0           //
+        cmp r3, r0           // checking boundaries
     is eq                   //
-        ldi r0, 1          // checking boundaries
-    else                  //
-        inc r0           //
-        inc r0          //
-        inc r0         //
-    fi                //
+
+        ldi r2, NUM_CELL
+        ld r2, r3
+        ldi r0, -9
+        add r0, r3
+        st r2, r3
+        ldi r0, 1          
+    else                  
+        inc r0           
+        inc r0          
+        inc r0         
+        ldi r2, NUM_CELL
+        ld r2, r3   
+        inc r3
+        st r2, r3
+    fi                
+    ldi r2, X_CURSOR
     st r2, r0
 
     ldi r2, DISP_B_ADDR         //
@@ -137,10 +174,7 @@ right:
     ldi r3, 0b10100111       //
     st r2, r3               //
 
-    ldi r2, NUM_CELL
-    ld r2, r3
-    inc r3
-    st r2, r3
+    
     
     br exit
 
