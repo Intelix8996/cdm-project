@@ -235,23 +235,115 @@ All timings in clock-perfect amd were calculated for cdm8 mark 5.
 
 ### RAM Controller
 
+This controller is used to expand RAM.
+
+The first 127 bytes in RAM address space are left as is. Second hals becomes paged. We can write to controller to change page, if we read from it we get current page.
+
+*image*
+
+![RAM Controller Connection](img/ram_controller_connection.PNG)
+
+The chip takes address bus as input and forms address especially for RAM chip.
+
+![RAM Controller](img/ram_controller.PNG)
+
+Register here holds current page. Logic at the bottom forms address by taking 7 bits from address bus and adding page bits on top.
+
+If 7-th bit of address bus is zero, that means that adress is in range 0x00-0x7F, then we ignore page bits, set upper bits to zero and output a 7-bit address with last bit being zero. This is the case when we address 0x00-0x7F (global part of RAM address space).
+
+When we address paged part of RAM address space, 7-th bit is one, so register content incremented by one goes to upper bits of address.
+
 ### Interrupt Arbiter
+
+This device allows to have 8 separate prioritized interrupts.
+
+![Interrupt Arbiter Connection](img/interrupt_arbiter_connection.PNG)
+
+It connects to processor `IRQ`, `vec` and `IAck` pins.
+
+On south size it has pairs of IRQn and IAckn pins.
+
+They are arranged like this (from left to right):
+
+INT0, IA0, INT1, IA1, ... , INT7, IA7
+
+Where INTn is request line for interrupt with vector n and IAn is corresponding IAck pin.
+
+![Interrupt Arbiter](img/interrupt_arbiter.PNG)
+
+*expl*
 
 ### Interrupt Enable Buffer
 
+This device is addon to `Interrupt Arbiter` that gives ability to disable cartain interrupts.
+
+We can write a byte to it to set new state. If we read from it we get current interrupt state.
+
+Bits in this byte prohibit certain interrupts:
+
++ Bit 0 correspond to IRQ0
++ Bit 7 correspond to IRQ7
+
++ If bit is one - interrupt is enabled
++ if bit is zero - interrupt is disabled
+
+![Interrupt Enable Buffer Connection](img/enable_buffer_connection.PNG)
+
+It connects to `Interrupt Arbiter` from north and has IRQn and IAckn pins on south side. 
+
+![Interrupt Enable Buffer](img/enable_buffer.PNG)
+
+Inside it is basically a register. Its bits are `AND`ed with corresponding IRQ pins.
+
+Device has `Enable` pin that disables all interrupts. It is raised to 8 bits and `AND`ed to register bits.
+
 ### Address Decoder
 
-### Dynamic Interrupt Controller
+This device forms signals that represent what memory region processor currently addressing.
 
-### IO Register
+![Address Decoder Connection](img/address_decoder_connection.PNG)
 
-### IO Hex Display Controller
+Beside connecting to processor, you need to specify where would be IO region. It we connect it like on picture, we get IO to be on addresses 0x70-0x7F.
 
-### IO Seven Segment Display Controller
+Output signals:
 
-### IO Hardware Stack ?
++ `Inst` - instruction region
++ `Data` - data region
++ `Vector` - interrupt vector region
++ `I/O` - IO region
++ `ROM` - ROM chip select
++ `RAM` - RAM chip select 
++ `IO Address` - IO deviecs address for IO bus
+
+![Address Decoder](img/address_decoder.PNG)
+
++ `ROM` is high, when either `Inst` is high or `Vector` is high - both instuction and vector are in ROM.
+
++ `IO Address` is lower 4 bits of address bus.
+
++ Other signals are formed in a obvious way.
+
+*truth table*
+
+### Dynamic Interrupt Controller ???
+
+### IO Register ???
+
+### IO Hex Display Controller ??
+
+### IO Seven Segment Display Controller ???
+
+### Stack ???/
 
 ### IO Random Number Generator
+
+This device connects logisim's stock random number generator to IO Bus
+
+![Random Number Generator Connection](img/random_number_generator_connection.PNG)
+
+We can read 8-bit random number. After reading a new number is generated.
+
+![Random Number Generator](img/random_number_generator.PNG)
 
 ### Display Controller
 
