@@ -10,9 +10,6 @@ main:
     ldi r3, 1                   // IR bank is 1
     st r2, r3                  //
     
-    ldi r2, IR_BUFFER_ADDR   //
-    ldi r3, 0xff            // enable interrupts
-    st r2, r3              //
     
     ldi r3, 1             //
     ldi r1, X_CURSOR     //
@@ -36,8 +33,6 @@ main:
     add r0, r3                   // call for copying Computer's map to RAM
     st r2, r3                   //
     jsr 0                      //
-
-
 
     ldi r2, RANDOM_GEN_ADDR          //
     ld r2, r0                       //

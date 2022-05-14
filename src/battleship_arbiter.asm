@@ -18,16 +18,18 @@ main:
 // start of loop //    
 loop:
     if
-        tst r3                               //
-    is z                                    // 
-        jsr indicate_computers_turn        //
-        rcall 1, 0                        //
-        jsr turnoff_comp_ind             // if (r3==0) then (call Computer's turn module) else (call Players's turn module)
-        ldi r3, 1                       //
-    else                               //
-        jsr indicate_players_turn     //
+        tst r3                                //
+    is z                                     // 
+        jsr indicate_computers_turn         //               
+        rcall 1, 0                         //
+        jsr turnoff_comp_ind              // if (r3==0) then (call Computer's turn module) else (call Players's turn module)
+        ldi r3, 1                        //
+    else                                //
+        jsr indicate_players_turn      //
+        jsr enable_interrupts         //
         rcall 6, 0                   //
-        jsr turnoff_pl_ind          //
+        jsr disable_interrupts      //
+        jsr turnoff_pl_ind         //
         ldi r3, 0
     fi
 
@@ -55,7 +57,17 @@ loop:
         halt
     fi
     mret
-    
+
+enable_interrupts:
+    ldi r2, IR_BUFFER_ADDR   
+    ldi r3, 0xff           
+    st r2, r3        
+    rts
+disable_interrupts:
+    ldi r2, IR_BUFFER_ADDR   
+    ldi r3, 0x00           
+    st r2, r3        
+    rts     
 
 indicate_players_turn:
     ldi r2, DISP_B_ADDR

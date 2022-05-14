@@ -8,8 +8,8 @@ main:
     ldi r2, RAM_CONTROLLER_ADDR  //
     st r2, r0                   // map number in r0
 
-    ldi r2, 0x8a
-    ldi r0, 30  // X - coordinate
+    ldi r2, 0x89
+    ldi r0, 27  // X - coordinate
     ldi r1, 27 //  Y - coordinate
     
 loop:
@@ -28,8 +28,8 @@ loop:
         dec r0
         dec r0
         dec r0
-    is z
-        ldi r0, 30
+    is lt
+        ldi r0, 27
         dec r1
         dec r1
         dec r1
