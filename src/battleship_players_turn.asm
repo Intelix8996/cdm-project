@@ -108,16 +108,37 @@ hit_proccessing:
     if                                   //
         cmp r2, r3                      // 
     is eq                              //
-        rcall 1, 0                    //   if (SIZE_OF_SHIP==NUM_OF_HITS) then (call print_killed_ship and return defualt state of global vars)
-        ldi r0, NUM_OF_HITS          //
-        ldi r1, 0                   //
-        st r0, r1                  //
+        jsr disable_interrupts        //
+        rcall 1, 0                   //   if (SIZE_OF_SHIP==NUM_OF_HITS) then (call print_killed_ship and return defualt state of global vars)
+        ldi r0, NUM_OF_HITS         //
+        ldi r1, 0                  //
+        st r0, r1                 //
+        ldi r2, DISP_B_ADDR
+        ldi r1, X_CURSOR
+        ld r1, r0
+        inc r1
+        ld r1, r1
+        ldi r3, 0b10100111
+        st r2, r0
+        st r2, r1
+        st r2, r3
+        jsr enable_interrupts
     fi                            //
     ldi r0, PLAYERS_TURN
     ldi r1, 0
     st r0, r1
     br waiting_for_turn
 
+enable_interrupts:
+    ldi r2, IR_BUFFER_ADDR   
+    ldi r3, 0xff           
+    st r2, r3        
+    rts
+disable_interrupts:
+    ldi r2, IR_BUFFER_ADDR   
+    ldi r3, 0x00           
+    st r2, r3        
+    rts 
 
 print_square:
     ldi r2, X_CURSOR
