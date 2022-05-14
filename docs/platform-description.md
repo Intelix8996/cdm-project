@@ -120,27 +120,22 @@ To perform a jump you need to specify bank and address in this bank to jump to.
 
 In this example we jump to bank 2 address 0x00:
 ```c
-
 ldi r0, 0xF0 # Let controller be on address 0xF0
 ldi r1, 0x02 # Jump to bank 2
 st r0, r1    # Write command to controller
 jsr 0x00     # Jump some address in target block
-
 ```
 
 In this example we return from bank:
 ```c
-
 ldi r0, 0xF0 # Let controller be on address 0xF0
 ldi r1, 0x80 # "Return" command
 st r0, r1    # Write command to controller
 rts          # Return from function
-
 ```
 
 In this example we return from ISR and restore registers:
 ```c
-
 # Begining of ISR
 
 pushall      # Save registers
@@ -152,7 +147,6 @@ ldi r1, 0x81 # "Return and restore" command
 st r0, r1    # Write command to controller
 popall       # Restore registers
 rti          # Return from ISR
-
 ```
 
 (It switches banks by forming high part of address.)
@@ -428,7 +422,6 @@ In monocrome mode only `r` component is used, it defines whether pixel is on or 
 
 In this example we print green pixel at (10, 15):
 ```c
-
 ldi r0, 10          # X
 ldi r1, 15          # Y
 ldi r2, 0xF6        # Controller address
@@ -437,14 +430,12 @@ ldi r3, 0b10100010  # Print green pixel command
 st r2, r0           # Write X
 st r2, r1           # Write Y
 st r2, r3           # Write Command
-
 ```
 
 ![Display Write Single Pixel](img/display_write_single_pixel.PNG)
 
 In this example we clear screen and then print block of red pixels at (6, 5):
 ```c
-
 ldi r0, 6           # X
 ldi r1, 5           # Y
 ldi r2, 0xF6        # Controller address
@@ -458,7 +449,6 @@ ldi r3, 0b11110001  # Clear screen and print
                       a block of green pixels
 
 st r2, r3           # Write Command
-
 ```
 
 ![Display Write Block of Pixels](img/display_write_block_of_pixels.PNG)
@@ -467,12 +457,10 @@ st r2, r3           # Write Command
 
 In this example we simply clear screen:
 ```c
-
 ldi r2, 0xF6        # Controller address
 ldi r3, 0b10010000  # Clear screen command
 
 st r2, r3           # Write command
-
 ```
 
 Now we will focus on monochrome version. More about displaying color later.
@@ -615,6 +603,8 @@ Each file is compiled with thsi toolchain to an 256 byte image and then theese 2
 
 So, you can have one big project with a lot of files spannig to many modules and you just execute one command and get your project compiled in one image.
 
+More about `cocomake` [here](https://github.com/Intelix8996/cocomake)
+
 ## VS Code Integration
 
 For the text editor we decied to use VS Code as it is free modern software with a lot of customization options via extensions.
@@ -623,12 +613,109 @@ To make support for cdm8 assembler we develpoed an extension for VS Code that ad
 
 # Demonstration
 
-In this section we will describe out demonstation setup. 
+In this section we will describe our demonstation setup. 
 
 ## Project Overview
 
+So, full project tree looks like this:
 
+![Project Tree](img/project_tree.PNG)
 
+Let's take a look on cocomake configuration.
+
+In `paths` file we define relative paths to working folders:
+
+```
+src=src
+temp=temp
+output=output
+```
+
+There we set source files folder to be `src/`, temporarty files foler to `temp/` and folder where final images would be to `output/`.
+
+In `tools` file we define all the tools that we will use in our toolchain. Theese are assembler `cocas`, linker `cocol` and C preprocessor `mcpp`:
+
+```
+cocas=python cocas\cocas.py->obj
+cocol=python cocol\cocol.py->img
+mcpp=mcpp\mcpp.bat->asm->_p
+debug=python cocoide\cocoideV1.91.pyw
+```
+
+The debug application is also defined here. It is set to `CocoIDE`, so when we run `cocomake -d [file]`, it will open this file in `CocoIDE` for debug.
+
+Next, we define toolchains themself in `toolchains` file: 
+
+```
+asm=mcpp->cocas->cocol
+obj=cocol
+img=
+```
+
+There we configuring build system to pass `.asm` files through mcpp, cocas, cocol and then link to final image, pass `.obj` files through cocol and then link to final image and link `.img` files directly to image.
+
+Then, we can create some `.cocomake` files that would describe final images, theese are located in `config` directory.
+
+For example we have `firmware.cocomake`:
+
+```
+firmware.img
+0:bootloader.asm
+2:display_print.asm
+5:app_example.asm
+```
+
+If we run `cocomake config/firmware.cocomake`, we will get `firmware.img` in `output` directory as result. 
+
+Memory map of this image would look like this:
+
+```
+0000-00FF: bootloader.asm
+0100-01FF: -
+0200-02FF: display_print.asm
+0300-03FF: -
+0400-04FF: -
+0500-05FF: app_example.asm
+```
+
+As you might have noticed, we use `mcpp` in our toolchain. That's because `cocas` doesn't have any `include` functionality. For multifile projects this feature is critical.
+
+So, source files are located in `src` directory and header files are located in `include` directory.
+
+For example, in `devices.h` file we define all devices' addresses and so we can use this header in other files.
+
+```c
+#include <devices.h>
+
+// ...
+
+ldi r0, IR_BUFFER_ADDR  // 
+ldi r1, 0x00            // Init IR buffer
+st r0, r1               //
+
+// ...
+```
+
+There, `IR_BUFFER_ADDR` is from `devices.h`.
+
+Another important application of headers is libraries. We can put some macros and rsects in header file to form a library. 
+
+For example, we have `call.h` which defines macros to work with modules and ROM Controller.
+
+```c
+#include <call.h>
+
+// ...
+
+call 5, DEFAULT_ENTRY
+
+//...
+```
+
+There, `call` is macro for calling other module defined in `call.h`, `DEFAULT_ENTRY` also defined in `call.h` and stands for module default entry point (0x00). 
+
+Moreover headers can be used to export entry points for a module.
+ 
 ## Scheme Overview
 
 *image*
