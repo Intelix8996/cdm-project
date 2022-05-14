@@ -51,13 +51,13 @@ You can read more about it [here](#ram-controller)
 
 In Cdm8 in harvard setup interrupt vectors are located in in upper 16 bytes of program memory and therefore theese vectors are constant.
 
-In out platform you can use it as is or connect `Dynamic Interrupt Controller` which allows you to change theese vectors by masking their addresses with external registers. 
+In out platform you can use it as is or connect [Dynamic Interrupt Controller](#dynamic-interrupt-controller) which allows you to change theese vectors by masking their addresses with external registers. 
 
 But this device is unconpatable with ROM controller
 
 #### With ROM Controller
 
-ROM Controller takes part in interrupt handling process - when interrupt occurs controller changes memory page to one that is specified on corresponding controller pins.
+[ROM Controller](#rom-controller) takes part in interrupt handling process - when interrupt occurs controller changes memory page to one that is specified on corresponding controller pins.
 
 The easiest way to specify page to handle interrupts is to connect a constant to theese pins, however in this case you cannot change it.
 
@@ -328,15 +328,47 @@ Output signals:
 |      1      |          1         |      0       |      I/O       |
 |      1      |          1         |      1       |      I/O       |
 
-### Dynamic Interrupt Controller ???
+### Dynamic Interrupt Controller 
 
-### IO Register ???
+This controller is used when you need dynamic interrupts vectors without using ROM controller.
 
-### IO Hex Display Controller ??
+However, this controller has very limited scope and that's why it won't be described here.
 
-### IO Seven Segment Display Controller ???
+![Dynamic Interrupt Controller](img/dynamic_interrupt_controller.PNG)
 
-### Stack ???/
+### IO Register 
+
+This device is simple 8-bit register connected to I/O bus.
+
+You can write to it and read from it.
+
+![I/O Register](img/io_reg.PNG)
+
+### Hardware Stack
+
+This device is a couple of registers arranged in stack configuration. Size of this stack is 20 bytes.
+
+If you write to it, you push a value.
+If you read from it, you pop a value.
+
+![I/O Stack](img/io_stack.PNG)
+
+Where each `Stack 4 byte` is:
+
+![4-byte stack](img/stack.PNG)
+
+### IO Hex Display Controller 
+
+This device is used to drive two hex displays.
+It is similer to regular `IO Register`, but has special interface for two hex displays. Contents of registed are displayed.
+
+![Hex Display Connection](img/hex_display_connection.PNG)
+
+### IO Seven Segment Display Controller 
+
+This device is similar to previous one, but it has special interface for 7-segment display.
+
+![7 Segment Controller](img/io_7seg.PNG)
 
 ### IO Random Number Generator
 
@@ -718,17 +750,74 @@ Moreover headers can be used to export entry points for a module.
  
 ## Scheme Overview
 
-*image*
+Logisim schemes are located in `logisim` directory.
+
+The main file is `cdm-platform.circ`. It contains only one scheme - one that we use for demonstration.
+
+This file imports cdm8 scheme and `CdM8_mb5_library` which has all the devices.
+
+So, in `cdm-platform.circ` we just connect CPU and all the devices with wires.
+
+*scheme*
 
 We use this this this
 
 ## Code Overview
 
-We set up cocomake like this
+So, our demonstration firmware consists of bootloader, sample program that prints "Hello cdm8!"???? and our main application - Battleship game.
+
+**Battlesip**
+
+To show the capabilities of our platform we decided to code Battleship game (soviet/russian varitant).
+
+Rules are standart for this variant of game. In our version player plays agains AI.
+
+Player has cursor on his screen which can be moves with buttons *(left, right, up, down)*. *Hit* button fires a shot.
+
 ...
 
-*code samples*
+*.cocomake*
+
+*ai scheme*
+
+However, game some limitations:
+
++ Maps for AI, and for player are hardcoded (16 maps) and randomly picked on start. 
++ If a player kills a part of the ship, he/she must contunie to kill exactly this ship (standart tactic).
+
+In all other spheres?? it is fully functional battleship.
 
 # Conclusion
 
 idk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
