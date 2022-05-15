@@ -137,7 +137,16 @@ hit_proccessing:
     ldi r0, PLAYERS_TURN
     ldi r1, 0
     st r0, r1
-    br waiting_for_turn
+    
+    ldi r2, COMP_SHIPS
+    ld r2, r2
+    if
+        tst r2
+    is nz
+        br waiting_for_turn
+    else
+        mret
+    fi
 
 enable_interrupts:
     ldi r2, IR_BUFFER_ADDR   

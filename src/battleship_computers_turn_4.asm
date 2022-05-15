@@ -2,27 +2,25 @@
 #include <call.h>
 #include <battleship/global_vars.h>
 #include <battleship/map_constants.h>
-
+//FIX
 asect 0
 fourth_hit:
 
     ldi r2, HIT_CELL3
     ld r2, r2
-    push r2
     ldi r3, DIR_OF_HITS   // 0 - up, 1 - right, 2 - down, 3 - left
     ld r3, r3
     ldi r0, HIT_X_COORD3
     ld r0, r0
     ldi r1, HIT_Y_COORD3
     ld r1, r1
-    ldi r2, 28
     if
         tst r3
     is z
         if
-            cmp r1, r2
+            ldi r3, 28
+            cmp r1, r3
         is lt, and
-            pop r2
             ldi r3, -10
             add r3, r2
             ld r2, r3
@@ -43,9 +41,9 @@ fourth_hit:
         dec r3
     is z
         if
-            cmp r0, r2
+            ldi r3, 28
+            cmp r0, r3
         is lt, and
-            pop r2
             inc r2
             ld r2, r3
             shla r3
@@ -57,18 +55,17 @@ fourth_hit:
         else 
             ldi r3, 3 // change right -> left
             jsr change_direction
-            br fourth_hit
+            br third_hit
         fi
     fi
 
-    ldi r2, 1
     if
         dec r3
     is z
         if 
-            cmp r1, r2
+            ldi r3, 1
+            cmp r1, r3
         is gt, and
-            pop r2
             ldi r3, 10
             add r3, r2
             ld r2, r3
@@ -81,7 +78,7 @@ fourth_hit:
         else
             ldi r3, 0 // change down -> up
             jsr change_direction
-            br fourth_hit
+            br third_hit
         fi
     fi
 
@@ -89,9 +86,9 @@ fourth_hit:
         dec r3
     is z
         if 
-            cmp r0, r2
+            ldi r3, 1
+            cmp r0, r3
         is gt, and
-            pop r2
             dec r2
             ld r2, r3
             shla r3
@@ -103,7 +100,7 @@ fourth_hit:
         else
             ldi r3, 1 // change left -> right
             jsr change_direction
-            br fourth_hit
+            br third_hit
         fi
     fi
 
@@ -142,8 +139,7 @@ hit_proccessing:
 
     ldi r3, K_CELL     //
     st r2, r3         // mark cell as a killed ship cell
-
-    ldi r3, 0b11100001    
+    
     jsr print_square
 
     ldi r3, NUM_OF_HITS
@@ -186,38 +182,35 @@ change_direction:
     
 
 print_square:
-    ldi r2, HIT_X_COORD4
+    ldi r2, HIT_X_COORD3
     ld r2, r0
-    ldi r2, HIT_Y_COORD4
+    ldi r2, HIT_Y_COORD3
     ld r2, r1
     dec r0
     dec r1
 
     ldi r2, DISP_A_ADDR
-    push r3
     ldi r3, 0b00000111
     st r2, r3
     st r2, r0
     st r2, r1
-    pop r3
+    ldi r3, 0b11100001
     st r2, r3
 
     inc r0
-    push r3
     ldi r3, 0b00000101
     st r2, r3
     st r2, r0
     st r2, r1
-    pop r3
+    ldi r3, 0b11100001
     st r2, r3
 
     inc r0
-    push r3
     ldi r3, 0b00000111
     st r2, r3
     st r2, r0
     st r2, r1
-    pop r3
+    ldi r3, 0b11100001
     st r2, r3
     rts
 
