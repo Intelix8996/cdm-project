@@ -32,7 +32,7 @@ loop:
         jsr turnoff_pl_ind         //
         ldi r3, 0
     fi
-
+    
     ldi r2, COMP_SHIPS     //
     ld r2, r0             // Number of Computer's ships in r0
     inc r2               // Number of Player's ships in r1
@@ -46,16 +46,17 @@ loop:
     then               //
         br loop       //
     fi               
-    
 // end of loop //
 
     if
         tst r0
     is z
-        halt
+        rcall 10, DEFAULT_ENTRY
     else
-        halt
+        rcall 13, DEFAULT_ENTRY
+        rcall 11, DEFAULT_ENTRY
     fi
+    
     mret
 
 enable_interrupts:

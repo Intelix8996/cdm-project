@@ -2,7 +2,7 @@
 #include <call.h>
 #include <battleship/global_vars.h>
 #include <battleship/map_constants.h>
-//FIX
+
 asect 0
 fourth_hit:
 
@@ -55,7 +55,7 @@ fourth_hit:
         else 
             ldi r3, 3 // change right -> left
             jsr change_direction
-            br third_hit
+            br fourth_hit
         fi
     fi
 
@@ -78,7 +78,7 @@ fourth_hit:
         else
             ldi r3, 0 // change down -> up
             jsr change_direction
-            br third_hit
+            br fourth_hit
         fi
     fi
 
@@ -100,7 +100,7 @@ fourth_hit:
         else
             ldi r3, 1 // change left -> right
             jsr change_direction
-            br third_hit
+            br fourth_hit
         fi
     fi
 
@@ -182,9 +182,9 @@ change_direction:
     
 
 print_square:
-    ldi r2, HIT_X_COORD3
+    ldi r2, HIT_X_COORD4
     ld r2, r0
-    ldi r2, HIT_Y_COORD3
+    ldi r2, HIT_Y_COORD4
     ld r2, r1
     dec r0
     dec r1

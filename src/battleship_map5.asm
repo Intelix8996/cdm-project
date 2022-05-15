@@ -1,6 +1,6 @@
 #include <devices.h>
 #include "battleship/map_constants.h"
-
+#include <devices/terminal.h>
 asect 0
 
 main:
@@ -49,7 +49,9 @@ loop:
         ldc r2, r1
         st r2, r1
         inc r2
-
+        push r2
+        printc "."
+        pop r2
         dec r0
         bnz loop
         

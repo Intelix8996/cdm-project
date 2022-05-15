@@ -7,7 +7,8 @@
 asect 0
 main:
     ldi r2, RAM_CONTROLLER_ADDR  //
-    st r2, r0                   // map number in r0
+    ldi r0, P_COMP_MAP          //
+    st r2, r0                  // map number in r0
 
     ldi r2, 0x89
     ldi r0, 27  // X - coordinate
@@ -15,13 +16,15 @@ main:
     
 loop:
     ld r2, r3 // address of cell in r2, type of cell in r1
+    push r2
     if
-        tst r3
-    is nz
-        push r2
+        ldi r2, 0b10000001
+        and r2, r3
+        dec r3
+    is z
         jsr drawShip
-        pop r2
     fi
+    pop r2
 
     dec r2
 
@@ -31,7 +34,6 @@ loop:
         dec r0
     is lt
         push r2
-        printc "."
         pop r2
         ldi r0, 27
         dec r1
@@ -53,7 +55,7 @@ mret
 
 drawShip:
 
-    ldi r2, DISP_A_ADDR
+    ldi r2, DISP_B_ADDR
     ldi r3, 0b00000111
     st r2, r3
     st r2, r0

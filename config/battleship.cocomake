@@ -14,6 +14,10 @@ battleship.img
 12:battleship_players_turn.asm
 13:battleship_print_killed_ship_1.asm
 14:battleship_print_killed_ship_2.asm
+16:battleship_print_WIN.asm
+17:battleship_print_LOSE.asm
+18:battleship_print_BATTLESHIP.asm
+19:battleship_print_comp_ships.asm
 100:battleship_map0.asm
 101:battleship_map1.asm
 102:battleship_map2.asm
