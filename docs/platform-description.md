@@ -863,6 +863,14 @@ To show the capabilities of our platform we decided to code Battleship game (sov
 
 Rules are standard for this variant of game. In our version player plays against AI.
 
+**Gameplay:**
+
+When you start a program, it loads random maps to RAM and draws player's map on screen. After that game begins.
+
++ Player's field is displayed on left screen
++ Enemy's field is displayed in right screen
++ A line at the top of the screen shows whose turn is it.
+
 Player has cursor on his screen which can be moved with buttons *(left, right, up, down)*. *Hit* button fires a shot.
 
 *Logic of the game looks like this:*
