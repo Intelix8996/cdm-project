@@ -25,7 +25,7 @@ generating_random_direction:
             push r2
             ldi r3, 128
             cmp r2, r3 
-        is ge, and
+        is pl, and
             ld r2, r2
             shla r2
         is cc
@@ -85,7 +85,7 @@ generating_random_direction:
             push r2
             ldi r3, 227
             cmp r3, r2
-        is ge, and
+        is pl, and
             ld r2, r2
             shla r2
         is cc
