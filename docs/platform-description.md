@@ -642,7 +642,7 @@ It is incremental, so only modified files get recompiled. That makes compiling m
 
 You can define a toolchain - set programs which will be applied to file. 
 
-Each file is compiled with thsi toolchain to an 256 byte image and then theese 256 byte images glued together to produce one big image that you load straight in logisim.
+Each file is compiled with this toolchain to an 256 byte image and then theese 256 byte images glued together to produce one big image that you load straight in logisim.
 
 ![cocomake](img/cocomake_process.png)
 
@@ -655,6 +655,16 @@ More about `cocomake` [here](https://github.com/Intelix8996/cocomake)
 For the text editor we decied to use VS Code as it is free modern software with a lot of customization options via extensions.
 
 To make support for cdm8 assembler we develpoed an extension for VS Code that adds syntax highlighting for assembly and C preprocessor directives as well as code snippets.
+
+This extension is published in VS Code Marketplace can be easily found.
+
+![Find Extension](img/cdm8_extension.PNG)
+
+[Extension page in VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Intelix.cdm8-assembly)
+
+There is an example how the code looks with this extension:
+
+![Code Sample](img/highlight_example.PNG)
 
 # Demonstration
 
