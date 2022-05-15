@@ -1,6 +1,6 @@
 # Cdm8-Based Modular Platform 
 ## Group project
-### [Documentation](docs/platform-description.md)
+### [Documentation](https://github.com/Intelix8996/cdm-project/wiki/platform-description)
 ### Sources [here](include/) and [here](src/)
 ### [Main Scheme](logisim/cdm-platform.circ) and [Component Library](logisim/CdM8_mb5_library.circ)
 ---

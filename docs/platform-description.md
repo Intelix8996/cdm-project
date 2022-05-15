@@ -276,7 +276,7 @@ When some trigger goes to 0 that means that this interrupt is being handled by p
 
 If there are no active requests at the moment and one of `INTn` pins is high then n is latched to `R1` as interrupt vector, `D8` goes high requesting processor to handle interrupt with vector n.
 
-If there are some active requests at the moment then on falling edge of processor's `Iack` the leftmost trigger with high state is reset and number of next trigger with with high state is latched into `R1` as interrupt vector and then processor `IRQ` line is retriggered.
+If there are some active requests at the moment then on falling edge of processor's `Iack` the leftmost trigger with high state is reset and number of next trigger with with high state is latched into `R1` as interrupt vector and then processor `IRQ` line is retriggered. This defines interrupt prioritization.
 
 ### Interrupt Enable Buffer
 
@@ -798,7 +798,7 @@ However, game some limitations:
 + Maps for AI, and for player are hardcoded (16 maps) and randomly picked on start. 
 + If a player kills a part of the ship, he/she must contunie to kill exactly this ship (standart tactic).
 
-In all other spheres?? it is fully functional battleship.
+In all other aspects it is fully functional battleship.
 
 # Conclusion
 
