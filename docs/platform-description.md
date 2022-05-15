@@ -40,7 +40,7 @@ Bus lines:
 
 ## Expanding ROM
 
-If we need more program memory we can use ROM controller to get more address space with memmory paging technique. 
+If we need more program memory we can use ROM controller to get more address space with memory paging technique. 
 
 We take `Address Out` signal of `ROM Controller` and connect it as higher bits of ROM's address input.
 
@@ -60,9 +60,9 @@ You can read more about it [here](#ram-controller)
 
 #### Without ROM Controller
 
-In Cdm8 in harvard setup interrupt vectors are located in in upper 16 bytes of program memory and therefore theese vectors are constant.
+In Cdm8 in harvard setup interrupt vectors are located in in upper 16 bytes of program memory and therefore these vectors are constant.
 
-In out platform you can use it as is or connect [Dynamic Interrupt Controller](#dynamic-interrupt-controller) which allows you to change theese vectors by masking their addresses with external registers. 
+In out platform you can use it as is or connect [Dynamic Interrupt Controller](#dynamic-interrupt-controller) which allows you to change these vectors by masking their addresses with external registers. 
 
 But this device is unconpatable with ROM controller
 
@@ -70,9 +70,9 @@ But this device is unconpatable with ROM controller
 
 [ROM Controller](#rom-controller) takes part in interrupt handling process - when interrupt occurs controller changes memory page to one that is specified on corresponding controller pins.
 
-The easiest way to specify page to handle interrupts is to connect a constant to theese pins, however in this case you cannot change it.
+The easiest way to specify page to handle interrupts is to connect a constant to these pins, however in this case you cannot change it.
 
-Better solution is to connect a register to bus and it's output to ISR Page pins. In that case you can set page dyncamically in runtime.
+Better solution is to connect a register to bus and it's output to ISR Page pins. In that case you can set page dynamically in runtime.
 
 ## Devices description
 
@@ -119,7 +119,7 @@ When jumping to bank, it saves current bank, it gives ability to jump to bank an
 
 + Programmer can switch between banks by writing a number N in range 0x00-0x7F. Then controller will switch to bank N.
 
-+ By writing 0x80 or 0x81 we can reutrn from bank.
++ By writing 0x80 or 0x81 we can return from bank.
 
 + 0x80 is used to return from bank in general. 
 
@@ -147,7 +147,7 @@ rts          # Return from function
 
 In this example we return from ISR and restore registers:
 ```c
-# Begining of ISR
+# Beginning of ISR
 
 pushall      # Save registers
 
@@ -209,7 +209,7 @@ Command will look like number in range `0x00`-`0x7F`, so general view is `0b0nnn
 + `rti` is low, `pop` is low, `push` is high
 + `inc` - increnent `C1` 
 + `store` - write `R1` to `S1` at address in `C1`
-+ Then, `0b0nnnnnnn` is present on `Address Out` and theese are higher bits of ROM address
++ Then, `0b0nnnnnnn` is present on `Address Out` and these are higher bits of ROM address
 
 *'return from bank':*
 
@@ -232,7 +232,7 @@ All timings in clock-perfect amd were calculated for cdm8 mark 5.
 
 This controller is used to expand RAM.
 
-The first 127 bytes in RAM address space are left as is. Second hals becomes paged. We can write to controller to change page, if we read from it we get current page.
+The first 127 bytes in RAM address space are left as is. Second half becomes paged. We can write to controller to change page, if we read from it we get current page.
 
 + When we address 0x00-0x7F, we address global part of RAM.
 
@@ -248,7 +248,7 @@ The chip takes address bus as input and forms address especially for RAM chip.
 
 Register here holds current page. Logic at the bottom forms address by taking 7 bits from address bus and adding page bits on top.
 
-If 7-th bit of address bus is zero, that means that adress is in range 0x00-0x7F, then we ignore page bits, set upper bits to zero and output a 7-bit address with last bit being zero. This is the case when we address 0x00-0x7F (global part of RAM address space).
+If 7-th bit of address bus is zero, that means that address is in range 0x00-0x7F, then we ignore page bits, set upper bits to zero and output a 7-bit address with last bit being zero. This is the case when we address 0x00-0x7F (global part of RAM address space).
 
 When we address paged part of RAM address space, 7-th bit is one, so register content incremented by one goes to upper bits of address.
 
@@ -277,7 +277,7 @@ Thiggers `D0`-`D7` store current state of interrupt request lines.
 + 1 means that interrupt is requested
 + 0 means that interrupt is not requested
 
-Theese triggers are set to 1 asynchronously when high state is present on consequent `INT` pin.
+These triggers are set to 1 asynchronously when high state is present on consequent `INT` pin.
 
 When some trigger goes to 0 that means that this interrupt is being handled by processor and then consequent `IA` pin pulses. 
 
@@ -285,18 +285,18 @@ When some trigger goes to 0 that means that this interrupt is being handled by p
 
 If there are no active requests at the moment and one of `INTn` pins is high then n is latched to `R1` as interrupt vector, `D8` goes high requesting processor to handle interrupt with vector n.
 
-If there are some active requests at the moment then on falling edge of processor's `Iack` the leftmost trigger with high state is reset and number of next trigger with with high state is latched into `R1` as interrupt vector and then processor `IRQ` line is retriggered. This defines interrupt prioritization.
+If there are some active requests at the moment then on falling edge of processor's `Iack` the leftmost trigger with high state is reset and number of next trigger with high state is latched into `R1` as interrupt vector and then processor `IRQ` line is retriggered. This defines interrupt prioritization.
 
 ### Interrupt Enable Buffer
 
-This device is addon to `Interrupt Arbiter` that gives ability to disable cartain interrupts.
+This device is addon to `Interrupt Arbiter` that gives ability to disable certain interrupts.
 
 We can write a byte to it to set new state. If we read from it we get current interrupt state.
 
 Bits in this byte enable or disable certain interrupts:
 
-+ Bit 0 correspond to INT0
-+ Bit 7 correspond to INT7
++ Bit 0 corresponds to INT0
++ Bit 7 corresponds to INT7
 
 + If bit is one - interrupt is enabled
 + if bit is zero - interrupt is disabled
@@ -382,7 +382,7 @@ Where each `Stack 4 byte` is:
 ### IO Hex Display Controller 
 
 This device is used to drive two hex displays.
-It is similer to regular `IO Register`, but has special interface for two hex displays. Contents of registed are displayed.
+It is similar to regular `IO Register`, but has special interface for two hex displays. Contents of registed are displayed.
 
 ![Hex Display Connection](img/hex_display_connection.PNG)
 
@@ -408,7 +408,7 @@ This controller is used to drive logisim's 32x32 pixel LED matrix *(mode 3 - "Se
 
 It has monochrome and color versions.
 
-![Monocrome Display Controller Connection](img/mono_display_connection.PNG)
+![Monochrome Display Controller Connection](img/mono_display_connection.PNG)
 
 We can write bytes to it and thus send data or commands. If we read from it, we get last command or data written.
 
@@ -424,7 +424,7 @@ You can send either a data byte or a command byte.
 
 **Data** byte looks like this: `0b0ddddddd`
 
-+ Its most significat bit is zero, it indicates that it is data byte.
++ Its most significant bit is zero, it indicates that it is data byte.
 
 + `ddddddd` - 7-bit data word (X, Y, Pattern/Mask).
 
@@ -432,7 +432,7 @@ You can send either a data byte or a command byte.
 
 + Its most significat bit is one, it indicates that it is command byte.
 
-+ `l` - bLock, if zero - print single pixel, if one - block of pixels.
++ `l` - block, if zero - print single pixel, if one - block of pixels.
 
 + `w` - write, if zero - don't print anything, if one - print something.
 
@@ -448,7 +448,7 @@ You can send either a data byte or a command byte.
 
 Color components are 1-bit so we get 3-bit color and thus we can have up to 8 colors *(black is also a color, it is coded `0b00000000`)*.
 
-In monocrome mode only `r` component is used, it defines whether pixel is on or off.
+In monochrome mode only `r` component is used, it defines whether pixel is on or off.
 
 **Command examples:**
 
@@ -521,11 +521,11 @@ Now we will focus on monochrome version. More about displaying color later.
 
 This controller is designed to be used with LED matrix in mode 3 ("Select Rows/Columns"). In this mode matrix has two inputs on west side. Upper is column select and lower is data. You can read more about matrix behaviour in this mode in the [official documentation](http://www.cburch.com/logisim/docs/2.3.0/libs/io/dotmat.html)
 
-So, controller has the same two ouputs which you connect to the matrix.
+So, controller has the same two outputs which you connect to the matrix.
 
 Controller generantes scan signal - pulses bits one by one on `Scan` pin and simultaneously outputs approrpiate data on `Data` pin. Repeatedly going through all 32 colomns, we get an image.
 
-To be able to write to display without graphical artifacts (we can't read from memory and write to it simultaneously, if we want to write something to chip, it can't outupt data to maxtix, thus we get an artifact on screen), we use two buffers - acive, data from it goes to ouput, and shadow buffer - we write new data to it. Buffers store 32 32-bit words, each word correspond to one colomn. Buffers must store identical data.
+To be able to write to display without graphical artifacts (we can't read from memory and write to it simultaneously, if we want to write something to chip, it can't outupt data to matrix, thus we get an artifact on screen), we use two buffers - active, data from it goes to output, and shadow buffer - we write new data to it. Buffers store 32 32-bit words, each word corresponds to one colomn. Buffers must store identical data.
 
 When we update state of buffer:
 
@@ -533,7 +533,7 @@ When we update state of buffer:
 + Buffers are swapped, changes are now displayed
 + The same data is written to the second buffer to keep the same data in buffers.
 
-![Monocrome Display Controller](img/video_controller.PNG)
+![Monochrome Display Controller](img/video_controller.PNG)
 
 `C1` is main counter, counts colomns to 32, connected to `col` signal.
 
@@ -545,9 +545,9 @@ In `Scanline Generator` we pass `col` through decoder and then wire its output t
 
 `Memory Multiplexing Logic` consists of different demultiplexors and multiplexors that wire `M1` and `M2` in a correct way (active buffer is wired to output, shadow buffer is wired to internal scheme).
 
-`Append Logic` is used to get a 32-bit word from buffer, modify it, and then write it back to buffer. It just modifies bitword through `AND`ing or `OR`ing this bitword with some bitmasks. Depending on command, bitmask can be either one bit (to write single pixel) or 7-bit (to write block of pixels). Theese bitmasks are generated by this logic in obvious way.
+`Append Logic` is used to get a 32-bit word from buffer, modify it, and then write it back to buffer. It just modifies bitword through `AND`ing or `OR`ing this bitword with some bitmasks. Depending on command, bitmask can be either one bit (to write single pixel) or 7-bit (to write block of pixels). These bitmasks are generated by this logic in obvious way.
 
-`Data Queue` is four registers arranged in a queue. This queue is used to store commands and data. When we write a byte, it goes to the first register and all other registes are pushed forward. When we read, we get contents of the last register. Registers are wired to theese signals *(from left to right)*: `cmd`, `y`, `x`, `mask`. This defines data prococol that we described before.
+`Data Queue` is four registers arranged in a queue. This queue is used to store commands and data. When we write a byte, it goes to the first register and all other registes are pushed forward. When we read, we get contents of the last register. Registers are wired to these signals *(from left to right)*: `cmd`, `y`, `x`, `mask`. This defines data prococol that we described before.
 
 `Command Decoder` is used to decode controls signals and color data from command byte.
 
@@ -568,21 +568,21 @@ Finally, `Sequencer` is used to sequently execute some internal commands *(clear
 + On phase 2, we swap buffers.
 + On phase 3, we write to other buffer, if `write` command is decoded.
 
-When we write to one of the memory chips, data from its output goes through `Append Logic` and them back to its input. By doing that we modify bitwords in memory chips.
+When we write to one of the memory chips, data from its output goes through `Append Logic` and then back to its input. By doing that we modify bitwords in memory chips.
 
 **Displaying color:**
 
-When using monocrome version of controller, we simply connect one matix to its outputs.
+When using monochrome version of controller, we simply connect one matrix to its outputs.
 
-We can display different colors by stacking a bunch of martices on top of each other. The key thing here is to set their colors to red, green and blue, but with opacity not equal to 255 (in our case we picked opacity for each matrix to be 255/3). It that case we allow matrices to blend their color and thus get an ability to diplay multiple colors at once.
+We can display different colors by stacking a bunch of martices on top of each other. The key thing here is to set their colors to red, green and blue, but with opacity not equal to 255 (in our case we picked opacity for each matrix to be 255/3). In that case we allow matrices to blend their color and thus get an ability to diplay multiple colors at once.
 
-If fact, we can't directly stack matrices on top of each other, that's why we introduce some offset to it *(1 pixel)*.
+In fact, we can't directly stack matrices on top of each other, that's why we introduce some offset to it *(1 pixel)*.
 
 Proper way of stacking martices is shown on picture below:
 
 ![Stack matrices](img/display_write_single_pixel.PNG)
 
-> Because of offset, active zone of screen loses 2 pixels, thus resolution of screen in color mode is 30x32 pixels, in monocrome mode it is 32x32 pixels.
+> Because of offset, active zone of screen loses 2 pixels, thus resolution of screen in color mode is 30x32 pixels, in monochrome mode it is 32x32 pixels.
 
 ### Joystick Controller
 
@@ -633,7 +633,7 @@ This controller is used to drive terminal and keyboard.
 
 This controller basically just connects terminal and keyboard to bus in a way that when writing, 7 bits of data (as ASCII symbol) goes to the terminal and `last bit of data AND Write` forms `Terminal Clear` signal. That means that we can write a character to terminal as well as clear it by sending `0x80`.
 
-When reading keyboard buffer connects to 7 bits of data bus and `Keybaord Available` goes to the last bit of data bus. That helps to read out a whole buffer. Just read from this device while data is not equal to `0x80`.
+When reading keyboard buffer connects to 7 bits of data bus and `Keyboard Available` goes to the last bit of data bus. That helps to read out a whole buffer. Just read from this device while data is not equal to `0x80`.
 
 This device supports interrupts. If keybaord buffer was empty and then there was some input, a pulse occurs on IRQ.
 
@@ -641,11 +641,11 @@ This device supports interrupts. If keybaord buffer was empty and then there was
 
 In this part we will describe software part of this platform.
 
-As we use more than 256 bytes of program memory and need to work with a lot of code. Default development tool (CocoIDE) is very unconfotable to use when working with multifile projects and that's why we developed some tools to make software development process easier.
+As we use more than 256 bytes of program memory and need to work with a lot of code. Default development tool (CocoIDE) is very uncomfortable to use when working with multifile projects and that's why we developed some tools to make software development process easier.
 
 ## cocomake
 
-The main application that does hard work is cocomake. It is an incremental build system desined to work with big multifile projects. 
+The main application that does hard work is cocomake. It is an incremental build system designed to work with big multifile projects. 
 
 It is incremental, so only modified files get recompiled. That makes compiling much faster.
 
@@ -655,7 +655,7 @@ There, only `battleship_arbiter.asm` got recompiled as other files were not modi
 
 You can define a toolchain - set programs which will be applied to file. 
 
-Each file is compiled with this toolchain to an 256 byte image and then theese 256 byte images glued together to produce one big image that you load straight in logisim.
+Each file is compiled with this toolchain to an 256 byte image and then these 256 byte images glued together to produce one big image that you load straight in logisim.
 
 ![cocomake](img/cocomake_process.png)
 
@@ -665,9 +665,9 @@ More about `cocomake` [here](https://github.com/Intelix8996/cocomake)
 
 ## VS Code Integration
 
-For the text editor we decied to use VS Code as it is free modern software with a lot of customization options via extensions.
+For the text editor we decided to use VS Code as it is free modern software with a lot of customization options via extensions.
 
-To make support for cdm8 assembler we develpoed an extension for VS Code that adds syntax highlighting for assembly and C preprocessor directives as well as code snippets.
+To make support for cdm8 assembler we developed an extension for VS Code that adds syntax highlighting for assembly and C preprocessor directives as well as code snippets.
 
 This extension is published in VS Code Marketplace can be easily found.
 
@@ -681,7 +681,7 @@ There is an example how the code looks with this extension:
 
 # Demonstration
 
-In this section we will describe our demonstation setup. 
+In this section we will describe our demonstration setup. 
 
 ## Project Overview
 
@@ -699,9 +699,9 @@ temp=temp
 output=output
 ```
 
-There we set source files folder to be `src/`, temporarty files foler to `temp/` and folder where final images would be to `output/`.
+There we set source files folder to be `src/`, temporary files folder to `temp/` and folder where final images would be to `output/`.
 
-In `tools` file we define all the tools that we will use in our toolchain. Theese are assembler `cocas`, linker `cocol` and C preprocessor `mcpp`:
+In `tools` file we define all the tools that we will use in our toolchain. These are assembler `cocas`, linker `cocol` and C preprocessor `mcpp`:
 
 ```
 cocas=python cocas\cocas.py->obj
@@ -722,7 +722,7 @@ img=
 
 There we configuring build system to pass `.asm` files through mcpp, cocas, cocol and then link to final image, pass `.obj` files through cocol and then link to final image and link `.img` files directly to image.
 
-Then, we can create some `.cocomake` files that would describe final images, theese are located in `config` directory.
+Then, we can create some `.cocomake` files that would describe final images, these are located in `config` directory.
 
 For example we have `firmware.cocomake`:
 
@@ -831,7 +831,7 @@ So, in `cdm-platform.circ` we just connect CPU and all the devices with wires.
 
 ## Code Overview
 
-So, our demonstration firmware consists of bootloader, some libraties, sample program that prints "Hello world!" and our main application - Battleship game.
+So, our demonstration firmware consists of bootloader, some libraries, sample program that prints "Hello world!" and our main application - Battleship game.
 
 Image *(battleship.img)* memory map looks like this:
 
@@ -861,9 +861,9 @@ Image *(battleship.img)* memory map looks like this:
 
 To show the capabilities of our platform we decided to code Battleship game (soviet/russian varitant).
 
-Rules are standart for this variant of game. In our version player plays agains AI.
+Rules are standard for this variant of game. In our version player plays against AI.
 
-Player has cursor on his screen which can be moves with buttons *(left, right, up, down)*. *Hit* button fires a shot.
+Player has cursor on his screen which can be moved with buttons *(left, right, up, down)*. *Hit* button fires a shot.
 
 *Logic of the game looks like this:*
 
@@ -876,6 +876,6 @@ Player has cursor on his screen which can be moves with buttons *(left, right, u
 *However, game some limitations:*
 
 + Maps for AI, and for player are hardcoded (16 maps) and randomly picked on start. 
-+ If a player kills a part of the ship, he/she must contunie to kill exactly this ship (standart tactic).
++ If a player kills a part of the ship, he/she must continue to kill exactly this ship (standard tactic).
 
 In all other aspects it is fully functional battleship.
