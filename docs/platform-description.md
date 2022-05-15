@@ -263,7 +263,20 @@ INT0 has the highest priority, INT7 - the lowest.
 
 ![Interrupt Arbiter](img/interrupt_arbiter.PNG)
 
-*expl*
+Thiggers `D0`-`D7` store current state of interrupt request lines. 
+
++ 1 means that interrupt is requested
++ 0 means that interrupt is not requested
+
+Theese triggers are set to 1 asynchronously when high state is present on consequent `INT` pin.
+
+When some trigger goes to 0 that means that this interrupt is being handled by processor and then consequent `IA` pin pulses. 
+
+`D8` is a buffer for processor `IRQ` signal. 
+
+If there are no active requests at the moment and one of `INTn` pins is high then n is latched to `R1` as interrupt vector, `D8` goes high requesting processor to handle interrupt with vector n.
+
+If there are some active requests at the moment then on falling edge of processor's `Iack` the leftmost trigger with high state is reset and number of next trigger with with high state is latched into `R1` as interrupt vector and then processor `IRQ` line is retriggered. This defines interrupt prioritization.
 
 ### Interrupt Enable Buffer
 
@@ -629,7 +642,7 @@ It is incremental, so only modified files get recompiled. That makes compiling m
 
 You can define a toolchain - set programs which will be applied to file. 
 
-Each file is compiled with thsi toolchain to an 256 byte image and then theese 256 byte images glued together to produce one big image that you load straight in logisim.
+Each file is compiled with this toolchain to an 256 byte image and then theese 256 byte images glued together to produce one big image that you load straight in logisim.
 
 ![cocomake](img/cocomake_process.png)
 
@@ -642,6 +655,16 @@ More about `cocomake` [here](https://github.com/Intelix8996/cocomake)
 For the text editor we decied to use VS Code as it is free modern software with a lot of customization options via extensions.
 
 To make support for cdm8 assembler we develpoed an extension for VS Code that adds syntax highlighting for assembly and C preprocessor directives as well as code snippets.
+
+This extension is published in VS Code Marketplace can be easily found.
+
+![Find Extension](img/cdm8_extension.PNG)
+
+[Extension page in VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Intelix.cdm8-assembly)
+
+There is an example how the code looks with this extension:
+
+![Code Sample](img/highlight_example.PNG)
 
 # Demonstration
 
@@ -758,13 +781,42 @@ This file imports cdm8 scheme and `CdM8_mb5_library` which has all the devices.
 
 So, in `cdm-platform.circ` we just connect CPU and all the devices with wires.
 
-*scheme*
+![Scheme](img/main_scheme.PNG)
 
-We use this this this
+Here we have:
+
++ Cdm8 mk5 CPU
++ `Address Decoder` with a `0x7` constant, that means devices will be on addresses `0x70`-`0x7F`
++ `Interrupt Arbiter` with `IR Enable Buffer`
++ RAM and ROM
++ IO Bus with a lot of devices
+
+Devices on IO Bus:
+
++ Terminal Controller
++ Random Number Generator
++ RAM Controller
++ ROM Controller with a register attached to `ISR Page` pin
+
+![User Area](img/user_area.PNG)
+
+In user area we have:
+
++ Two 8 color 32x32 screens connected to display controllers
++ Terminal connected to terminal controller
++ Buttons connected to `INT0`-`INT4`
+
+> Buttons are connected to individual interrupts to speed up their processing. This way, we skip decoding state of each button from byte (if we use keypad controller, for example) and just put code for each button as ISR.
+
+RAM Layout:
+
++ `0x00`-`0x6F` - stack and global variables memory
++ `0x70`-`0x7F` - I/O devices
++ `0x80`-`0xFF` - paged memory
 
 ## Code Overview
 
-So, our demonstration firmware consists of bootloader, sample program that prints "Hello cdm8!"???? and our main application - Battleship game.
+So, our demonstration firmware consists of bootloader, some libraties, sample program that prints "Hello world!" and our main application - Battleship game.
 
 **Battlesip**
 
@@ -785,7 +837,7 @@ However, game some limitations:
 + Maps for AI, and for player are hardcoded (16 maps) and randomly picked on start. 
 + If a player kills a part of the ship, he/she must contunie to kill exactly this ship (standart tactic).
 
-In all other spheres?? it is fully functional battleship.
+In all other aspects it is fully functional battleship.
 
 # Conclusion
 

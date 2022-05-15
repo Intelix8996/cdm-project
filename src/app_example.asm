@@ -1,22 +1,16 @@
 #include <call.h>
-#include <devices.h>
-
 #include <devices/terminal.h>
 
 asect 0
 
 main:
-    printc "s"
-    printc TERM_LF
+    cprints str     // print null-ternianted string str
+    printc TERM_LF  // print "line feed" symbol
 
-    cprints str
-
-    printc TERM_RETURN
-
-    mret    
+    mret            // return from module
 
 asect 0x50
 str:
-    dc "func_printstring_t", 0
+    dc "Hello world!", 0
 
 end.

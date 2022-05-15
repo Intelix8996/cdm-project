@@ -25,7 +25,7 @@ main:
     call DISP_BANK, DISP_PRINTC
 
     //call 2, APP_ENTRY
-    halt
+    //halt
 
     ldi r1, 0x0a            // return ascii code
     ldi r2, TERMINAL_ADDR
