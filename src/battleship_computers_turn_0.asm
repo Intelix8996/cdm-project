@@ -113,7 +113,15 @@ kill_and_return_default_state:
     ldi r0, NUM_OF_HITS
     ldi r1, 0
     st r0, r1
-    br start
+    ldi r2, PLAYER_SHIPS
+    ld r2, r2
+    if 
+        tst r2
+    is nz
+        br start
+    else
+        mret
+    fi
 
 copy_cursor_posititon:
     ldi r2, X_CURSOR
