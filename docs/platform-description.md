@@ -263,7 +263,20 @@ INT0 has the highest priority, INT7 - the lowest.
 
 ![Interrupt Arbiter](img/interrupt_arbiter.PNG)
 
-*expl*
+Thiggers `D0`-`D7` store current state of interrupt request lines. 
+
++ 1 means that interrupt is requested
++ 0 means that interrupt is not requested
+
+Theese triggers are set to 1 asynchronously when high state is present on consequent `INT` pin.
+
+When some trigger goes to 0 that means that this interrupt is being handled by processor and then consequent `IA` pin pulses. 
+
+`D8` is a buffer for processor `IRQ` signal. 
+
+If there are no active requests at the moment and one of `INTn` pins is high then n is latched to `R1` as interrupt vector, `D8` goes high requesting processor to handle interrupt with vector n.
+
+If there are some active requests at the moment then on falling edge of processor's `Iack` the leftmost trigger with high state is reset and number of next trigger with with high state is latched into `R1` as interrupt vector and then processor `IRQ` line is retriggered.
 
 ### Interrupt Enable Buffer
 
