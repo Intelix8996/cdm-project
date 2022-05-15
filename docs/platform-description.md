@@ -1,13 +1,26 @@
-# Modular Platform based on Cdm-8 processor
+# Modular Platform based on CdM-8 processor
 
 # Overview
+
 In our project we decided to build a universal platform that can be used for different purposes.
 
+This platform feature:
+
++ Display controller
++ Expandable ROM and RAM both up 32 KB
++ Joystick, Terminal, Keypad Controllers
++ Interrupt Arbiter
++ Random number generator
++ Hex and 7-segment display drivers
++ 16-bit Math Coprocessor
++ Much more other useful peripheral devices
+
+
 # Hardware 
-In this section we will describe hardware part of this platorm.
+In this section we will describe hardware part of this platform.
 
 ## Basic setup
-The bare minimum for this platform is Cdm8 CPU, Address Decoder, ROM and RAM
+The bare minimum for this platform is Cdm8 CPU, [Address Decoder](#address-decoder), ROM and RAM
 
 ![Minimal setup](img/bare_minimum.PNG)
 
@@ -280,7 +293,7 @@ This device is addon to `Interrupt Arbiter` that gives ability to disable cartai
 
 We can write a byte to it to set new state. If we read from it we get current interrupt state.
 
-*Bits in this byte enable or disable certain interrupts:*
+Bits in this byte enable or disable certain interrupts:
 
 + Bit 0 correspond to INT0
 + Bit 7 correspond to INT7
@@ -308,7 +321,7 @@ This device forms signals that represent what memory region processor currently 
 
 Beside connecting to processor, you need to specify where would IO region be. If we connect it like on picture, we get IO to be on addresses 0x70-0x7F.
 
-*Output signals:*
+**Output signals:**
 
 + `Inst` - instruction region
 + `Data` - data region
@@ -514,7 +527,7 @@ Controller generantes scan signal - pulses bits one by one on `Scan` pin and sim
 
 To be able to write to display without graphical artifacts (we can't read from memory and write to it simultaneously, if we want to write something to chip, it can't outupt data to maxtix, thus we get an artifact on screen), we use two buffers - acive, data from it goes to ouput, and shadow buffer - we write new data to it. Buffers store 32 32-bit words, each word correspond to one colomn. Buffers must store identical data.
 
-*When we update state of buffer:*
+When we update state of buffer:
 
 + Data is written to shadow buffer
 + Buffers are swapped, changes are now displayed
@@ -593,7 +606,7 @@ This controller can drive up to 8 buttons. It can be used in polling mode or thr
 
 ![Keypad controller connection](img/keypad_connect.PNG)
 
-*Additional pins:*
+***Additional pins:***
 
 + IRQ (north) - interrupt request line for this device, active when some buttons are pressed
 + Button pins (south) - 8 pins for buttons
@@ -612,7 +625,7 @@ This controller is used to drive terminal and keyboard.
 
 ![Terminal Controller Connnection](img/terminal_connection.PNG)
 
-*Additional pins:*
+***Additional pins:***
 
 + Terminal/Keyboard pins (south) - pins that connect to terminal and keyboard
 
@@ -851,6 +864,10 @@ To show the capabilities of our platform we decided to code Battleship game (sov
 Rules are standart for this variant of game. In our version player plays agains AI.
 
 Player has cursor on his screen which can be moves with buttons *(left, right, up, down)*. *Hit* button fires a shot.
+
+*Logic of the game looks like this:*
+
+![Program Block Scheme](img/program_block_scheme.jpg)
 
 *We implemented quite clever AI:*
 
