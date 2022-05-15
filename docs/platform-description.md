@@ -771,13 +771,42 @@ This file imports cdm8 scheme and `CdM8_mb5_library` which has all the devices.
 
 So, in `cdm-platform.circ` we just connect CPU and all the devices with wires.
 
-*scheme*
+![Scheme](img/main_scheme.PNG)
 
-We use this this this
+Here we have:
+
++ Cdm8 mk5 CPU
++ `Address Decoder` with a `0x7` constant, that means devices will be on addresses `0x70`-`0x7F`
++ `Interrupt Arbiter` with `IR Enable Buffer`
++ RAM and ROM
++ IO Bus with a lot of devices
+
+Devices on IO Bus:
+
++ Terminal Controller
++ Random Number Generator
++ RAM Controller
++ ROM Controller with a register attached to `ISR Page` pin
+
+![User Area](img/user_area.PNG)
+
+In user area we have:
+
++ Two 8 color 32x32 screens connected to display controllers
++ Terminal connected to terminal controller
++ Buttons connected to `INT0`-`INT4`
+
+> Buttons are connected to individual interrupts to speed up their processing. This way, we skip decoding state of each button from byte (if we use keypad controller, for example) and just put code for each button as ISR.
+
+RAM Layout:
+
++ `0x00`-`0x6F` - stack and global variables memory
++ `0x70`-`0x7F` - I/O devices
++ `0x80`-`0xFF` - paged memory
 
 ## Code Overview
 
-So, our demonstration firmware consists of bootloader, sample program that prints "Hello cdm8!"???? and our main application - Battleship game.
+So, our demonstration firmware consists of bootloader, some libraties, sample program that prints "Hello world!" and our main application - Battleship game.
 
 **Battlesip**
 
