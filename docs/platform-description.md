@@ -1,6 +1,4 @@
-Universal Modular Platform based on Cdm-8 processor
-
-Platform Description
+# Modular Platform based on Cdm-8 processor
 
 # Overview
 In our project we decided to build a universal platform that can be used for different purposes.
@@ -217,8 +215,6 @@ Command is `0x81` or `0b10000001`.
 
 All timings in clock-perfect amd were calculated for cdm8 mark 5.
 
-*maybe timing diagram*
-
 ### RAM Controller
 
 This controller is used to expand RAM.
@@ -284,7 +280,7 @@ This device is addon to `Interrupt Arbiter` that gives ability to disable cartai
 
 We can write a byte to it to set new state. If we read from it we get current interrupt state.
 
-Bits in this byte enable or disable certain interrupts:
+*Bits in this byte enable or disable certain interrupts:*
 
 + Bit 0 correspond to INT0
 + Bit 7 correspond to INT7
@@ -312,7 +308,7 @@ This device forms signals that represent what memory region processor currently 
 
 Beside connecting to processor, you need to specify where would IO region be. If we connect it like on picture, we get IO to be on addresses 0x70-0x7F.
 
-Output signals:
+*Output signals:*
 
 + `Inst` - instruction region
 + `Data` - data region
@@ -518,7 +514,7 @@ Controller generantes scan signal - pulses bits one by one on `Scan` pin and sim
 
 To be able to write to display without graphical artifacts (we can't read from memory and write to it simultaneously, if we want to write something to chip, it can't outupt data to maxtix, thus we get an artifact on screen), we use two buffers - acive, data from it goes to ouput, and shadow buffer - we write new data to it. Buffers store 32 32-bit words, each word correspond to one colomn. Buffers must store identical data.
 
-When we update state of buffer:
+*When we update state of buffer:*
 
 + Data is written to shadow buffer
 + Buffers are swapped, changes are now displayed
@@ -581,7 +577,7 @@ This controller drives 4-bit joystick.
 
 ![Joystick controller connection](img/joystick_connect.PNG)
 
-Additional pins:
+*Additional pins:*
 
 + X,Y (west) - pins to X and Y outputs of joystick
 
@@ -597,7 +593,7 @@ This controller can drive up to 8 buttons. It can be used in polling mode or thr
 
 ![Keypad controller connection](img/keypad_connect.PNG)
 
-Additional pins:
+*Additional pins:*
 
 + IRQ (north) - interrupt request line for this device, active when some buttons are pressed
 + Button pins (south) - 8 pins for buttons
@@ -616,7 +612,7 @@ This controller is used to drive terminal and keyboard.
 
 ![Terminal Controller Connnection](img/terminal_connection.PNG)
 
-Additional pins:
+*Additional pins:*
 
 + Terminal/Keyboard pins (south) - pins that connect to terminal and keyboard
 
@@ -641,6 +637,7 @@ The main application that does hard work is cocomake. It is an incremental build
 It is incremental, so only modified files get recompiled. That makes compiling much faster.
 
 ![Incremental Compilation](img/incremental_example.PNG)
+
 There, only `battleship_arbiter.asm` got recompiled as other files were not modified.
 
 You can define a toolchain - set programs which will be applied to file. 
@@ -788,7 +785,7 @@ So, in `cdm-platform.circ` we just connect CPU and all the devices with wires.
 
 ![Scheme](img/main_scheme.PNG)
 
-Here we have:
+*Here we have:*
 
 + Cdm8 mk5 CPU
 + `Address Decoder` with a `0x7` constant, that means devices will be on addresses `0x70`-`0x7F`
@@ -796,7 +793,7 @@ Here we have:
 + RAM and ROM
 + IO Bus with a lot of devices
 
-Devices on IO Bus:
+*Devices on IO Bus:*
 
 + Terminal Controller
 + Random Number Generator
@@ -805,7 +802,7 @@ Devices on IO Bus:
 
 ![User Area](img/user_area.PNG)
 
-In user area we have:
+*In user area we have:*
 
 + Two 8 color 32x32 screens connected to display controllers
 + Terminal connected to terminal controller
@@ -813,7 +810,7 @@ In user area we have:
 
 > Buttons are connected to individual interrupts to speed up their processing. This way, we skip decoding state of each button from byte (if we use keypad controller, for example) and just put code for each button as ISR.
 
-RAM Layout:
+*RAM Layout:*
 
 + `0x00`-`0x6F` - stack and global variables memory
 + `0x70`-`0x7F` - I/O devices
@@ -855,11 +852,11 @@ Rules are standart for this variant of game. In our version player plays agains 
 
 Player has cursor on his screen which can be moves with buttons *(left, right, up, down)*. *Hit* button fires a shot.
 
-We implemented quite clever AI:
+*We implemented quite clever AI:*
 
 ![AI Behaviour Block Scheme](img/AI%20scheme.jpg)
 
-However, game some limitations:
+*However, game some limitations:*
 
 + Maps for AI, and for player are hardcoded (16 maps) and randomly picked on start. 
 + If a player kills a part of the ship, he/she must contunie to kill exactly this ship (standart tactic).
