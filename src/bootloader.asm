@@ -1,5 +1,6 @@
 #include <devices.h>
 #include <call.h>
+#include <display_print.h>
 
 #define STACK_OFFSET    -144    // Stack offset
 
@@ -14,7 +15,16 @@ main:
     ldi r1, 0x00            // Init IR buffer
     st r0, r1               //
 
-    call 2, APP_ENTRY
+    ldi r0, DISP_A_ADDR
+    ldi r1, "H"
+    ldi r2, 15
+    push r2
+    ldi r2, 16
+    push r2
+
+    call DISP_BANK, DISP_PRINTC
+
+    //call 2, APP_ENTRY
     halt
 
     ldi r1, 0x0a            // return ascii code

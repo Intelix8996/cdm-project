@@ -7,4 +7,6 @@
 
 #define DISP_CODE   0x2d // Code section
 
+#define DISP_BANK   0x02 // Library bank
+
 #endif
