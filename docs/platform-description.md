@@ -640,6 +640,9 @@ The main application that does hard work is cocomake. It is an incremental build
 
 It is incremental, so only modified files get recompiled. That makes compiling much faster.
 
+![Incremental Compilation](img/incremental_example.PNG)
+There, only `battleship_arbiter.asm` got recompiled as other files were not modified.
+
 You can define a toolchain - set programs which will be applied to file. 
 
 Each file is compiled with this toolchain to an 256 byte image and then theese 256 byte images glued together to produce one big image that you load straight in logisim.
@@ -733,6 +736,8 @@ Memory map of this image would look like this:
 0500-05FF: app_example.asm
 ```
 
+Our demonstration config is `battleship.cocomake`. To build it run `cocomake config/battleship.cocomake`.
+
 As you might have noticed, we use `mcpp` in our toolchain. That's because `cocas` doesn't have any `include` functionality. For multifile projects this feature is critical.
 
 So, source files are located in `src` directory and header files are located in `include` directory.
@@ -818,7 +823,31 @@ RAM Layout:
 
 So, our demonstration firmware consists of bootloader, some libraties, sample program that prints "Hello world!" and our main application - Battleship game.
 
-**Battlesip**
+Image *(battleship.img)* memory map looks like this:
+
+```
+0000-00FF: bootloader.asm
+0100-01FF: display_print.asm
+0200-02FF: app_example.asm
+0300-03FF: battleship_isr.asm
+0400-04FF: battleship_main.asm
+0500-05FF: battleship_draw_map.asm
+0600-06FF: battleship_arbiter.asm
+0700-07FF: battleship_computers_turn_0.asm
+...
+0B00-0BFF: battleship_computers_turn_4.asm
+0C00-0CFF: battleship_players_turn.asm
+0D00-0DFF: battleship_print_killed_ship_1.asm
+0E00-0EFF: battleship_print_killed_ship_2.asm
+...
+6400-64FF: battleship_map0.asm
+6500-65FF: battleship_map1.asm
+...
+7200-72FF: battleship_map14.asm
+7300-73FF: battleship_map15.asm
+```
+
+**Battleship**
 
 To show the capabilities of our platform we decided to code Battleship game (soviet/russian varitant).
 
@@ -826,11 +855,9 @@ Rules are standart for this variant of game. In our version player plays agains 
 
 Player has cursor on his screen which can be moves with buttons *(left, right, up, down)*. *Hit* button fires a shot.
 
-...
+We implemented quite clever AI:
 
-*.cocomake*
-
-*ai scheme*
+![AI Behaviour Block Scheme](img/AI%20scheme.jpg)
 
 However, game some limitations:
 
@@ -838,38 +865,3 @@ However, game some limitations:
 + If a player kills a part of the ship, he/she must contunie to kill exactly this ship (standart tactic).
 
 In all other aspects it is fully functional battleship.
-
-# Conclusion
-
-idk
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
