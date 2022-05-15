@@ -6,10 +6,12 @@
 asect 0
 
 main:
-    ldi r2, IR_PAGE_REG_ADDR     // 
-    ldi r3, 1                   // IR bank is 1
+
+    ldi r2, IR_PAGE_REG_ADDR       //
+    ldi r3, ROM_CONTROLLER_ADDR   // 
+    ld r3, r3                    // IR bank is main - 1
+    dec r3                      //
     st r2, r3                  //
-    
     
     ldi r3, 1             //
     ldi r1, X_CURSOR     //

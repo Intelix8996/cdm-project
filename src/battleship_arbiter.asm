@@ -60,7 +60,7 @@ loop:
 
 enable_interrupts:
     ldi r2, IR_BUFFER_ADDR   
-    ldi r3, 0xff           
+    ldi r3, 0b00011111
     st r2, r3        
     rts
 disable_interrupts:
