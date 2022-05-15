@@ -1,8 +1,9 @@
-# Cdm8-Based Modular Platform 
+# CdM8-Based Modular Platform 
 ## Group project
 ### [Documentation](https://github.com/Intelix8996/cdm-project/wiki/platform-description)
-### Sources [here](include/) and [here](src/)
-### [Main Scheme](logisim/cdm-platform.circ) and [Component Library](logisim/CdM8_mb5_library.circ)
+### [Headers](include/)
+### [Sources](src/)
+### [Schemes](logisim/) (main scheme - [cdm-platform.circ](logisim/cdm-platform.circ))
 ---
 ### Repin Nikolay - Hardware Design
 ### Nikita Tatarinov - Software Design
