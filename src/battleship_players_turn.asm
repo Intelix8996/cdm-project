@@ -41,7 +41,17 @@ check:
         st r2, r3              //
         mret
     else
-        br hit_proccessing 
+        if
+            move r0, r1
+            shla r1
+        is cs
+            ldi r2, PLAYERS_TURN     
+            ldi r3, 0               
+            st r2, r3              
+            br waiting_for_turn
+        else
+            br hit_proccessing
+        fi 
     fi
 
 hit_proccessing:
