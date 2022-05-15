@@ -52,6 +52,16 @@ main:
     ldi r0, P_PLAYER_MAP     //
     rcall 1, 0              // Drawing a Player's map
 
+    ldi r2, DISP_B_ADDR         //
+    ldi r0, X_CURSOR           //
+    ld r0, r0                 //
+    ldi r1, Y_CURSOR         //
+    ld r1, r1               // Display the initial cursor position
+    ldi r3, 0b10100111     //
+    st r2, r0             //
+    st r2, r1            //
+    st r2, r3           //
+
     rcall 2, 0          // Calling the Arbiter module
 
     mret
