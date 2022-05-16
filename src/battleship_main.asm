@@ -82,11 +82,15 @@ main:
 
     rcall 2, DEFAULT_ENTRY    // Calling the Arbiter module
 
+    cprints return_message
+    printc TERM_LF
+
     mret
     
 loading_message:
     dc "Loading... Please wait...", 0
 
-
+return_message:
+    dc "Game finished", 0
 
 end.

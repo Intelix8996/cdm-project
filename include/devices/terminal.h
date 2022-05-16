@@ -87,12 +87,12 @@ rsect func_cprints
 func_cprints>
     ldi r2, TERMINAL_ADDR
 
-loop:
-    ldc r0, r3
-    st r2, r3
-    inc r0 
-    tst r3
-    bnz loop
+    do
+        ldc r0, r3
+        st r2, r3
+        inc r0 
+        tst r3
+    until z
 
     rts
 
@@ -104,12 +104,12 @@ rsect func_prints
 func_prints>
     ldi r2, TERMINAL_ADDR
 
-loop:
-    ld r0, r3
-    st r2, r3
-    inc r0 
-    tst r3
-    bnz loop
+    do
+        ld r0, r3
+        st r2, r3
+        inc r0 
+        tst r3
+    until z
 
     rts
 

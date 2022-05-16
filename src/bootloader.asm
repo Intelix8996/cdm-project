@@ -1,6 +1,6 @@
 #include <devices.h>
 #include <call.h>
-#include <display_print.h>
+#include <devices/terminal.h>
 
 #define STACK_OFFSET    -144    // Stack offset
 
@@ -15,8 +15,10 @@ main:
     ldi r1, 0x00            // Init IR buffer
     st r0, r1               //
 
-    //call 2, APP_ENTRY
-    //halt
+    cprints sample_message
+    printc TERM_LF
+    cprints battleship_message
+    printc TERM_LF
 
     ldi r1, 0x0a            // return ascii code
     ldi r2, TERMINAL_ADDR
@@ -52,4 +54,10 @@ loop:
     br loop                             // back to loop
 
     halt
+
+sample_message:
+    dc "enter 2 to run sample program", 0
+
+battleship_message:
+    dc "enter 4 to run battleship", 0
 end.
