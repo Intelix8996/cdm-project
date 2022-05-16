@@ -121,8 +121,10 @@ hit_proccessing:
     is cc                         //
         ldi r3, H_EMP_CELL       //
         st r2, r3               // check if a selected cell belongs to a ship or not
-        ldi r3, 0b11100100     //
-        jsr print_square      //
+        ldi r2, COLOR_OF_SQUARE
+        ldi r3, 0b11100100
+        st r2, r3
+        jsr print_square      
         ldi r3, DIR_OF_HITS
         ld r3, r3
         ldi r2, 0b00000010
@@ -140,6 +142,9 @@ hit_proccessing:
     ldi r3, K_CELL     //
     st r2, r3         // mark cell as a killed ship cell
     
+    ldi r2, COLOR_OF_SQUARE
+    ldi r3, 0b11100001
+    st r2, r3
     jsr print_square
 
     ldi r3, NUM_OF_HITS
@@ -194,7 +199,8 @@ print_square:
     st r2, r3
     st r2, r0
     st r2, r1
-    ldi r3, 0b11100001
+    ldi r3, COLOR_OF_SQUARE
+    ld r3, r3
     st r2, r3
 
     inc r0
@@ -202,7 +208,8 @@ print_square:
     st r2, r3
     st r2, r0
     st r2, r1
-    ldi r3, 0b11100001
+    ldi r3, COLOR_OF_SQUARE
+    ld r3, r3
     st r2, r3
 
     inc r0
@@ -210,7 +217,8 @@ print_square:
     st r2, r3
     st r2, r0
     st r2, r1
-    ldi r3, 0b11100001
+    ldi r3, COLOR_OF_SQUARE
+    ld r3, r3
     st r2, r3
     rts
 

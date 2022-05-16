@@ -11,6 +11,13 @@ main:
     cprints loading_message // print message
     printc TERM_LF      // line feed
 
+    ldi r2, DISP_A_ADDR      //
+    ldi r3, 0b10010000      //
+    st r2, r3              // clear displays
+    ldi r2, DISP_B_ADDR   //    
+    ldi r3, 0b10010000   //
+    st r2, r3           //
+
     ldi r2, IR_PAGE_REG_ADDR       //
     ldi r3, ROM_CONTROLLER_ADDR   // 
     ld r3, r3                    // IR bank is main - 1

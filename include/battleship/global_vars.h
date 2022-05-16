@@ -35,6 +35,8 @@
 #define HIT_Y_COORD3    0xf6 // Y coordinate of a cell that was hit the third
 #define HIT_Y_COORD4    0xf7 // Y coordinate of a cell that was hit the fourth
 
+#define COLOR_OF_SQUARE 0xf8 // Var for a storing color argument for a "Print_square" function
+
 
 
 
