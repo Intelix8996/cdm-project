@@ -18,10 +18,8 @@ loop:
     ld r2, r3 // address of cell in r2, type of cell in r1
     push r2
     if
-        ldi r2, 0b10000001
-        and r2, r3
-        dec r3
-    is z
+        shra r3
+    is cs
         jsr drawShip
     fi
     pop r2

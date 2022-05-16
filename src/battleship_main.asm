@@ -61,7 +61,7 @@ main:
     jsr 0                      //
 
     ldi r0, P_PLAYER_MAP     //
-    rcall 1, 0              // Drawing a Player's map
+    rcall 1, DEFAULT_ENTRY  // Drawing a Player's map
 
     ldi r2, DISP_B_ADDR
     ldi r3, 0b10010000
@@ -80,7 +80,7 @@ main:
 
     printc TERM_CLEAR   //clear terminal
 
-    rcall 2, 0          // Calling the Arbiter module
+    rcall 2, DEFAULT_ENTRY    // Calling the Arbiter module
 
     mret
     

@@ -119,7 +119,7 @@ hit_proccessing:
         cmp r2, r3                      // 
     is eq                              //
         jsr disable_interrupts        //
-        rcall 1, 0                   //   if (SIZE_OF_SHIP==NUM_OF_HITS) then (call print_killed_ship and return defualt state of global vars)
+        rcall 1, DEFAULT_ENTRY       //   if (SIZE_OF_SHIP==NUM_OF_HITS) then (call print_killed_ship and return defualt state of global vars)
         ldi r0, NUM_OF_HITS         //
         ldi r1, 0                  //
         st r0, r1                 //

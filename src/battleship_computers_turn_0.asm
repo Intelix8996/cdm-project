@@ -18,22 +18,22 @@ start:
     if                       // check if any ship is already found and hit
         tst r0              // 
     is z                   //
-first_hit:                    
-        rcall 1, 0
+first_hit:                      // in case NUM_OF_HITS==0 Computer need to make a first hit
+        rcall 1, DEFAULT_ENTRY
         ldi r0, NUM_OF_HITS       
         ld r0, r0
         ldi r3, 1
         if
-            cmp r3, r0
+            cmp r3, r0    // check if previous hit damaged a ship
         is eq
             ldi r3, SIZE_OF_SHIP
             ld r3, r3
             if
-                cmp r0, r3
+                cmp r0, r3  // check if damaged ship is fully destroyed
             is eq
-                br kill_and_return_default_state
+                br kill_and_return_default_state  // paints a cells around a ship
             else
-                br second_hit
+                br second_hit // if not, make a second hit
             fi
         else
             mret
@@ -43,8 +43,8 @@ first_hit:
     if
         dec r0
     is z
-second_hit:
-        rcall 2, 0
+second_hit:            
+        rcall 2, DEFAULT_ENTRY
         ldi r0, NUM_OF_HITS       
         ld r0, r0
         ldi r3, 2
@@ -69,7 +69,7 @@ second_hit:
         dec r0
     is z
 third_hit:
-        rcall 3, 0
+        rcall 3, DEFAULT_ENTRY
         ldi r0, NUM_OF_HITS       
         ld r0, r0
         ldi r3, 3
@@ -94,7 +94,7 @@ third_hit:
         dec r0
     is z
 fourth_hit:
-        rcall 4, 0
+        rcall 4, DEFAULT_ENTRY
         ldi r0, NUM_OF_HITS       
         ld r0, r0
         ldi r3, 4
@@ -107,8 +107,8 @@ fourth_hit:
         fi
     fi
 kill_and_return_default_state:
-    jsr copy_cursor_posititon
-    rcall 6, 0 
+    jsr copy_cursor_posititon  // copying X_CURSOR, Y_CURSOR and NUM_CELL to a safe place to not reset them, because they are used by Player 
+    rcall 6, DEFAULT_ENTRY 
     jsr copy_cursor_posititon
     ldi r0, NUM_OF_HITS
     ldi r1, 0

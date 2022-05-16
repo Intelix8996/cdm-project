@@ -15,19 +15,20 @@ main:
     ld r2, r3                    // First player in r3
     ldi r0, 0b00000001          // 0 - Computer, 1 - Player
     and r0, r3                 //  
+
 // start of loop //    
 loop:
     if
         tst r3                                //
     is z                                     // 
         jsr indicate_computers_turn         //               
-        rcall 1, 0                         //
+        rcall 1, DEFAULT_ENTRY             //
         jsr turnoff_comp_ind              // if (r3==0) then (call Computer's turn module) else (call Players's turn module)
         ldi r3, 1                        //
     else                                //
         jsr indicate_players_turn      //
         jsr enable_interrupts         //
-        rcall 6, 0                   //
+        rcall 6, DEFAULT_ENTRY       //
         jsr disable_interrupts      //
         jsr turnoff_pl_ind         //
         ldi r3, 0
@@ -46,15 +47,16 @@ loop:
     then               //
         br loop       //
     fi               
+
 // end of loop //
 
     if
         tst r0
     is z
-        rcall 10, DEFAULT_ENTRY
+        rcall 10, DEFAULT_ENTRY  // print WIN text to display
     else
-        rcall 13, DEFAULT_ENTRY
-        rcall 11, DEFAULT_ENTRY
+        rcall 11, DEFAULT_ENTRY  // print LOSE text to display
+        rcall 13, DEFAULT_ENTRY // show remaining Computer's ships
     fi
     
     mret

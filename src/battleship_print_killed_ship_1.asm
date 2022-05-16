@@ -177,7 +177,7 @@ loop:
         st r1, r0
     fi
 
-    rcall 1, 0 // call a module that marks diagonal cell relative to a selected
+    rcall 1, DEFAULT_ENTRY // call a module that paints diagonal cell relative to a selected
     
     pop r0
     dec r0
